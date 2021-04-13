@@ -1,0 +1,15 @@
+.app {
+    display: flex;
+}
+
+.app-content {
+    margin-left: 26rem;
+    max-width: 60rem;
+    padding: var(--space-extra-large);
+}
+
+.menu {
+    position: fixed;
+    max-width: 26rem;
+    width: 100%;
+}
