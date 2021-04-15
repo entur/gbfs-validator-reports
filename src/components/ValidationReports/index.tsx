@@ -81,14 +81,14 @@ const FileReportErrorsTable = ({ file }: any) => {
             .map((error: any) => (
               <TableRow key={hashCode(error)}>
                 <DataCell
-                  style={{ maxWidth: '12rem', overflowWrap: 'anywhere' }}
+                  style={{ maxWidth: '16rem', overflowWrap: 'break-word' }}
                 >
                   {error.instancePath && (
                     <PreformattedText>{error.instancePath}</PreformattedText>
                   )}
                 </DataCell>
                 <DataCell
-                  style={{ maxWidth: '12rem', overflowWrap: 'anywhere' }}
+                  style={{ maxWidth: '16rem', overflowWrap: 'break-word' }}
                 >
                   {error.schemaPath && (
                     <PreformattedText>{error.schemaPath}</PreformattedText>
@@ -205,7 +205,7 @@ const DetailsTable = ({ details }: any) => {
           setOpenModal(null);
         }}
         title="Validation errors"
-        size="large"
+        size="extraLarge"
       >
         <FileReportErrors file={openModal} />
       </Modal>
