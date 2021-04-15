@@ -3,20 +3,23 @@ import React, { useEffect, useState } from 'react';
 import { Heading1 } from '@entur/typography';
 import ValidationReports from '../../components/ValidationReports';
 
+import firebase from 'firebase/app';
+
 const Home: React.FC = () => {
   const [reports, setReports] = useState<any>(null);
 
   useEffect(() => {
     const fetchReports = async () => {
-      const response = await fetch('/reports/index.json');
-      const index = await response.json();
-
-      index.forEach(async (report: any, i: number) => {
-        const fileReportResponse = await fetch(`/reports/${report.file}`);
-        index[i].files = await fileReportResponse.json();
-      });
-
-      setReports(index);
+      // last N hours
+      const hours = 24;
+      const timestamp = new Date().getTime() - (1000 * 60 * 60 * hours);
+      const db = firebase.firestore();
+      const reportsRef = db.collection('reports');
+      const query = reportsRef.where("timestamp", ">", timestamp);
+      const snapshot = await query.get();
+      const reportSummaries: any = [];
+      snapshot.forEach(doc => reportSummaries.push(doc.data()));
+      setReports(reportSummaries);
     };
     fetchReports();
   }, []);

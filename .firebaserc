@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "dev": "gbfs-validator-reports-dev",
+    "default": "gbfs-validator-reports-dev"
+  }
+}

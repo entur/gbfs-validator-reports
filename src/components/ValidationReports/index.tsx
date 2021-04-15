@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   DataCell,
   ExpandableRow,
@@ -25,8 +25,22 @@ const hashCode = function (s: string) {
   return hash;
 };
 
-const ExpRow = ({ report, children }: any) => {
+const ExpRow = ({ report }: any) => {
   const [open, setopen] = useState<boolean>(false);
+  const [details, setDetails] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      const response = await fetch(report.detailsUrl);
+      const data = await response.json();
+      setDetails(data);
+    };
+
+    if (open && !details) {
+      fetchDetails();
+    }
+  }, [open, report.detailsUrl, details]);
+
   return (
     <>
       <TableRow>
@@ -36,12 +50,12 @@ const ExpRow = ({ report, children }: any) => {
         <DataCell>{report.provider}</DataCell>
         <DataCell>{report.version}</DataCell>
         <DataCell>{new Date(report.timestamp).toLocaleString()}</DataCell>
-        <DataCell status={report.summary.hasErrors ? 'negative' : 'positive'}>
-          {report.summary.hasErrors ? 'Invalid' : 'Valid'}
+        <DataCell status={report.hasErrors ? 'negative' : 'positive'}>
+          {report.hasErrors ? 'Invalid' : 'Valid'}
         </DataCell>
       </TableRow>
       <ExpandableRow colSpan={5} open={open}>
-        {children}
+        <DetailsTable details={details} />
       </ExpandableRow>
     </>
   );
@@ -147,6 +161,10 @@ const FileReportErrors = ({ file }: any) => {
 const DetailsTable = ({ details }: any) => {
   const [openModal, setOpenModal] = useState<any>(null);
 
+  if (!details) {
+    return <p>Loading</p>;
+  }
+
   return (
     <div style={{ paddingTop: '0.5rem' }}>
       <Table spacing="small">
@@ -159,7 +177,7 @@ const DetailsTable = ({ details }: any) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {details.files.files.map((file: any) => (
+          {details.files.map((file: any) => (
             <TableRow key={file.file}>
               <DataCell style={{ paddingLeft: '4.5rem' }}>{file.file}</DataCell>
               <DataCell
@@ -177,15 +195,15 @@ const DetailsTable = ({ details }: any) => {
                 status={
                   !file.exists
                     ? 'neutral'
-                    : file.errors
+                    : file.hasErrors
                     ? 'negative'
                     : 'positive'
                 }
               >
-                {!file.exists ? 'N/A' : file.errors ? 'Invalid' : 'Valid'}
+                {!file.exists ? 'N/A' : file.hasErrors ? 'Invalid' : 'Valid'}
               </DataCell>
               <DataCell style={{ display: 'flex' }}>
-                {file.errors && (
+                {file.hasErrors && (
                   <IconButton
                     onClick={() => {
                       setOpenModal(file);
@@ -226,9 +244,7 @@ const ValidationReports = ({ reports }: any) => (
     </TableHead>
     <TableBody>
       {reports.map((report: any) => (
-        <ExpRow report={report} key={report.provider}>
-          <DetailsTable details={report} />
-        </ExpRow>
+        <ExpRow report={report} key={report.timestamp} />
       ))}
     </TableBody>
   </Table>
