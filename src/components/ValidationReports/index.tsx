@@ -9,13 +9,12 @@ import {
   TableHead,
   TableRow,
 } from '@entur/table';
-import { IconButton, SecondarySquareButton, TertiaryButton } from '@entur/button';
+import { SecondarySquareButton } from '@entur/button';
 import { ValidationInfoIcon, WarningIcon } from '@entur/icons';
 import { Modal } from '@entur/modal';
 import { ListItem, PreformattedText, UnorderedList } from '@entur/typography';
 import { Pagination } from '@entur/menu';
 import { Tooltip } from '@entur/tooltip';
-import { Contrast } from '@entur/layout';
 
 const ExpRow = ({ report }: any) => {
   const [open, setopen] = useState<boolean>(false);
