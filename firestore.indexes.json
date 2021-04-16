@@ -1,4 +1,15 @@
 {
   "indexes": [],
-  "fieldOverrides": []
+  "fieldOverrides": [
+    {
+      "collectionGroup": "reports",
+      "fieldPath": "timestamp",
+      "indexes": [
+        {
+          "queryScope": "COLLECTION_GROUP",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ]
 }
