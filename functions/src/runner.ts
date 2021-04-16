@@ -1,34 +1,34 @@
-import axios from 'axios';
+import axios from "axios";
 
-import gbfs from './validation/gbfs';
-import gbfsVersions from './validation/gbfsVersions';
-import vehicleTypes from './validation/vehicleTypes';
-import systemInformation from './validation/systemInformation';
-import stationInformation from './validation/stationInformation';
-import stationStatus from './validation/stationStatus';
-import freeBikeStatus from './validation/freeBikeStatus';
-import systemHours from './validation/systemHours';
-import systemCalendar from './validation/systemCalendar';
-import systemRegions from './validation/systemRegions';
-import systemPricingPlans from './validation/systemPricingPlans';
-import systemAlerts from './validation/systemAlerts';
-import geofencingZones from './validation/geofencingZones';
-import { ErrorObject } from 'ajv';
+import gbfs from "./validation/gbfs";
+import gbfsVersions from "./validation/gbfsVersions";
+import vehicleTypes from "./validation/vehicleTypes";
+import systemInformation from "./validation/systemInformation";
+import stationInformation from "./validation/stationInformation";
+import stationStatus from "./validation/stationStatus";
+import freeBikeStatus from "./validation/freeBikeStatus";
+import systemHours from "./validation/systemHours";
+import systemCalendar from "./validation/systemCalendar";
+import systemRegions from "./validation/systemRegions";
+import systemPricingPlans from "./validation/systemPricingPlans";
+import systemAlerts from "./validation/systemAlerts";
+import geofencingZones from "./validation/geofencingZones";
+import { ErrorObject } from "ajv";
 
 enum File {
-  gbfs = 'gbfs',
-  gbfs_versions = 'gbfs_versions',
-  vehicle_types = 'vehicle_types',
-  system_information = 'system_information',
-  station_information = 'station_information',
-  station_status = 'station_status',
-  free_bike_status = 'free_bike_status',
-  system_hours = 'system_hours',
-  system_calendar = 'system_calendar',
-  system_regions = 'system_regions',
-  system_pricing_plans = 'system_pricing_plans',
-  system_alerts = 'system_alerts',
-  geofencing_zones = 'geofencing_zones',
+  gbfs = "gbfs",
+  gbfs_versions = "gbfs_versions",
+  vehicle_types = "vehicle_types",
+  system_information = "system_information",
+  station_information = "station_information",
+  station_status = "station_status",
+  free_bike_status = "free_bike_status",
+  system_hours = "system_hours",
+  system_calendar = "system_calendar",
+  system_regions = "system_regions",
+  system_pricing_plans = "system_pricing_plans",
+  system_alerts = "system_alerts",
+  geofencing_zones = "geofencing_zones",
 }
 
 type ValidatorResult = boolean | ErrorObject<string, Record<string, any>>[];
@@ -109,13 +109,13 @@ class Runner {
   alternativeAutoDiscovery(url: string) {
     return axios(url)
       .then(({ data }) => {
-        if (typeof data !== 'object') {
+        if (typeof data !== "object") {
           return {
             recommended: true,
             required: true,
             errors: false,
             exists: false,
-            file: `gbfs.json`,
+            file: "gbfs.json",
             url: null
           }
         }
@@ -128,7 +128,7 @@ class Runner {
           recommended: true,
           required: true,
           exists: true,
-          file: `gbfs.json`,
+          file: "gbfs.json",
         }
       })
       .catch(() => {
@@ -138,7 +138,7 @@ class Runner {
           required: true,
           errors: false,
           exists: false,
-          file: `gbfs.json`,
+          file: "gbfs.json",
         }
       })
   }
@@ -146,7 +146,7 @@ class Runner {
   checkAutodiscovery() {
     return axios(this.url)
       .then(({ status, data }) => {
-        if (typeof data !== 'object') {
+        if (typeof data !== "object") {
           return this.alternativeAutoDiscovery(`${this.url}/gbfs.json`)
         }
 
@@ -157,7 +157,7 @@ class Runner {
           recommended: true,
           required: true,
           exists: true,
-          file: `gbfs.json`,
+          file: "gbfs.json",
         }
       })
       .catch(() => {
@@ -171,7 +171,7 @@ class Runner {
           required: true,
           errors: false,
           exists: false,
-          file: `gbfs.json`,
+          file: "gbfs.json",
         }
       })
   }

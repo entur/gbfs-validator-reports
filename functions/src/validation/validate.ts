@@ -1,5 +1,5 @@
-import Ajv, { ErrorObject, Schema } from 'ajv';
-import formatsPlugin from 'ajv-formats';
+import Ajv, { ErrorObject, Schema } from "ajv";
+import formatsPlugin from "ajv-formats";
 
 const validate = <T>(schema: Schema, object: T): boolean | ErrorObject<string, Record<string, any>>[]  => {
   const ajv = new Ajv({ allErrors: true, strict: false });
