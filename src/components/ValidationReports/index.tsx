@@ -192,7 +192,7 @@ const DetailsTable = ({ details }: any) => {
                     : 'positive'
                 }
               >
-                {!file.exists ? 'N/A' : file.hasErrors ? 'Invalid' : 'Valid'}
+                {!file.exists ? 'N/A' : file.errors ? 'Invalid' : 'Valid'}
               </DataCell>
               <DataCell style={{ display: 'flex' }}>
                 {!file.exists && file?.errors?.message && (
