@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import {
   DataCell,
   ExpandableRow,
@@ -9,21 +9,13 @@ import {
   TableHead,
   TableRow,
 } from '@entur/table';
-import { IconButton } from '@entur/button';
-import { ValidationInfoIcon } from '@entur/icons';
+import { IconButton, SecondarySquareButton, TertiaryButton } from '@entur/button';
+import { ValidationInfoIcon, WarningIcon } from '@entur/icons';
 import { Modal } from '@entur/modal';
 import { ListItem, PreformattedText, UnorderedList } from '@entur/typography';
 import { Pagination } from '@entur/menu';
-
-const hashCode = function (s: string) {
-  var hash = 0;
-  for (var i = 0; i < s.length; i++) {
-    var character = s.charCodeAt(i);
-    hash = (hash << 5) - hash + character;
-    hash = hash & hash; // Convert to 32bit integer
-  }
-  return hash;
-};
+import { Tooltip } from '@entur/tooltip';
+import { Contrast } from '@entur/layout';
 
 const ExpRow = ({ report }: any) => {
   const [open, setopen] = useState<boolean>(false);
@@ -92,8 +84,8 @@ const FileReportErrorsTable = ({ file }: any) => {
                 index + 1 >= (currentPage - 1) * resultsPerPage + 1 &&
                 index + 1 <= currentPage * resultsPerPage,
             )
-            .map((error: any) => (
-              <TableRow key={hashCode(error)}>
+            .map((error: any, index: number) => (
+              <TableRow key={index}>
                 <DataCell
                   style={{ maxWidth: '16rem', overflowWrap: 'break-word' }}
                 >
@@ -131,21 +123,21 @@ const FileReportErrors = ({ file }: any) => {
     <div className="result">
       <h3>{file.file}</h3>
       {file.languages ? (
-        file.languages.map((lang: any) => {
+        file.languages.map((lang: any, i: number) => {
           if (file.required && !lang.exists) {
             return (
-              <h4>
+              <h4> 
                 Missing file {lang.lang}/{file.file}
               </h4>
             );
           } else if (lang.errors) {
             return (
-              <>
+              <Fragment key={i}>
                 <h4>
                   Error in {lang.lang}/{file.file}
                 </h4>
                 <FileReportErrorsTable file={lang} />
-              </>
+              </Fragment>
             );
           } else {
             return null;
@@ -167,7 +159,7 @@ const DetailsTable = ({ details }: any) => {
 
   return (
     <div style={{ paddingTop: '0.5rem' }}>
-      <Table spacing="small">
+      <Table>
         <TableHead>
           <TableRow>
             <HeaderCell style={{ paddingLeft: '4.5rem' }}>File</HeaderCell>
@@ -195,7 +187,7 @@ const DetailsTable = ({ details }: any) => {
                 status={
                   !file.exists
                     ? 'neutral'
-                    : file.hasErrors
+                    : file.errors
                     ? 'negative'
                     : 'positive'
                 }
@@ -203,14 +195,28 @@ const DetailsTable = ({ details }: any) => {
                 {!file.exists ? 'N/A' : file.hasErrors ? 'Invalid' : 'Valid'}
               </DataCell>
               <DataCell style={{ display: 'flex' }}>
-                {file.hasErrors && (
-                  <IconButton
-                    onClick={() => {
-                      setOpenModal(file);
-                    }}
-                  >
-                    <ValidationInfoIcon />
-                  </IconButton>
+                {!file.exists && file?.errors?.message && (
+                  <Tooltip
+                    placement="top"
+                    content={`Could not validate: ${file.errors.message}`}>
+                      <SecondarySquareButton>
+                        <WarningIcon />
+                      </SecondarySquareButton>
+                  </Tooltip>
+                  
+                )}
+                {file.exists && file.errors && (
+                  <Tooltip
+                    placement="top"
+                    content="See detailed error report">
+                    <SecondarySquareButton
+                      onClick={() => {
+                        setOpenModal(file);
+                      }}
+                    >
+                      <ValidationInfoIcon />
+                    </SecondarySquareButton>
+                  </Tooltip>
                 )}
               </DataCell>
             </TableRow>

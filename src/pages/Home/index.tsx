@@ -10,16 +10,17 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const fetchReports = async () => {
-      // last N hours
-      const hours = 24;
-      const timestamp = new Date().getTime() - (1000 * 60 * 60 * hours);
+      const timestamp = new Date().getTime() - (1000 * 60 * 60); // last hour
       const db = firebase.firestore();
-      const reportsRef = db.collection('reports');
-      const query = reportsRef.where("timestamp", ">", timestamp);
-      const snapshot = await query.get();
-      const reportSummaries: any = [];
-      snapshot.forEach(doc => reportSummaries.push(doc.data()));
-      setReports(reportSummaries);
+      const providers = await db.collection('providers').get();
+      const snapshot = await db.collectionGroup('reports')
+        .where("timestamp", ">", timestamp)
+        .orderBy("timestamp", "desc")
+        .limit(providers.size)
+        .get();
+      setReports(
+        snapshot.docs.map(docSnapshot => docSnapshot.data())
+      );
     };
     fetchReports();
   }, []);
