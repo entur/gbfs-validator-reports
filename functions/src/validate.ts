@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import Runner from "./runner";
+const config = require('./config/dev.json');
 
 type Feed = {
   provider: string;
@@ -10,11 +11,12 @@ type Feed = {
 };
 
 export default function(admin: any) {
-  const feeds: Feed[] = functions.config().feeds;
+  const feeds: Feed[] = config.feeds;
   const db: any = admin.firestore();
   const bucket = ( admin.storage() as any ).bucket();
 
-  return functions.https.onRequest(async (request, response) => {
+  return functions.pubsub.schedule('every 10 minutes').onRun(async (_) => {
+    const runtimeErrors: Error[] = [];
     await Promise.all(feeds.map(async (feed) => {
         try {
             const validator = new Runner(feed.url, {
@@ -55,11 +57,11 @@ export default function(admin: any) {
 
             
         } catch (e) {
-            console.log("Error", e);
+            runtimeErrors.push(e);
         }
-        return Promise.resolve("OK");
     }));
-
-    response.send("OK");
+    if (runtimeErrors.length > 0) {
+      console.log('Finished validation with errors', runtimeErrors);
+    }
   });
 }
