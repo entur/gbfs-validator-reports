@@ -1,157 +1,16 @@
 import * as functions from "firebase-functions";
 import Runner from "./runner";
 
-const feeds = [
-  {
-    provider: "voioslo_proxy",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/voioslo",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "voitrondheim_proxy",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/voitrondheim",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "boltoslo_proxy",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltoslo",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "boltlillestrom_proxy",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltlillestrom",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "boltfredrikstad_proxy",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltfredrikstad",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "boltbergen_proxy",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltbergen",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "limeoslo_proxy",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/limeoslo",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "voioslo_original",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/voioslo/original",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "voitrondheim_original",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/voitrondheim/original",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "boltoslo_original",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltoslo/original",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "boltlillestrom_original",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltlillestrom/original",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "boltfredrikstad_original",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltfredrikstad/original",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "boltbergen_original",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltbergen/original",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "limeoslo_original",
-    url: "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/limeoslo/original",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "voioslo_entur",
-    url: "https://api.dev.entur.io/mobility/v2/gbfs/voioslo",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "voitrondheim_entur",
-    url: "https://api.dev.entur.io/mobility/v2/gbfs/voitrondheim",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "boltoslo_entur",
-    url: "https://api.dev.entur.io/mobility/v2/gbfs/boltoslo",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "boltlillestrom_entur",
-    url: "https://api.dev.entur.io/mobility/v2/gbfs/boltlillestrom",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "boltfredrikstad_entur",
-    url: "https://api.dev.entur.io/mobility/v2/gbfs/boltfredrikstad",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "boltbergen_entur",
-    url: "https://api.dev.entur.io/mobility/v2/gbfs/boltbergen",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-  {
-    provider: "limeoslo_entur",
-    url: "https://api.dev.entur.io/mobility/v2/gbfs/limeoslo",
-    version: "2.2",
-    freefloating: true,
-    docked: false,
-  },
-];
+type Feed = {
+  provider: string;
+  url: string;
+  version: string;
+  freefloating: boolean;
+  docked: boolean;
+};
 
 export default function(admin: any) {
+  const feeds: Feed[] = functions.config().feeds;
   const db: any = admin.firestore();
   const bucket = ( admin.storage() as any ).bucket();
 

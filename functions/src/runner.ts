@@ -13,6 +13,7 @@ import systemRegions from './validation/systemRegions';
 import systemPricingPlans from './validation/systemPricingPlans';
 import systemAlerts from './validation/systemAlerts';
 import geofencingZones from './validation/geofencingZones';
+import { ErrorObject } from 'ajv';
 
 enum File {
   gbfs = 'gbfs',
@@ -30,7 +31,9 @@ enum File {
   geofencing_zones = 'geofencing_zones',
 }
 
-type Validator = (object: any) => any;
+type ValidatorResult = boolean | ErrorObject<string, Record<string, any>>[];
+
+type Validator = (object: any) => ValidatorResult;
 
 const validators: Record<File, Validator> = {
   [File.gbfs]: gbfs,
@@ -75,6 +78,22 @@ export interface IRunner {
   new(url: string, options: RunnerOptions): void;
 }
 
+export type FileResult = {
+  recommended: boolean;
+  required: boolean;
+  exists: boolean;
+  errors: ValidatorResult;
+  file: string;
+  url: string | null;
+}
+
+export type RunnerResult = {
+  summary: {
+    hasErrors: boolean;
+  },
+  files: FileResult[]
+};
+
 class Runner {
   url: string;
   options: RunnerOptions;
@@ -101,7 +120,7 @@ class Runner {
           }
         }
 
-        const errors = validators[File.gbfs](data)
+        const errors = validators[File.gbfs](data);
 
         return {
           errors,
@@ -143,7 +162,7 @@ class Runner {
       })
       .catch(() => {
         if (!this.url.match(/gbfs.json$/)) {
-          return this.alternativeAutoDiscovery(`${this.url}/gbfs.json`)
+          return this.alternativeAutoDiscovery(`${this.url}/gbfs.json`);
         }
 
         return {
@@ -157,10 +176,11 @@ class Runner {
       })
   }
 
-  checkFile(type: File, required: boolean): Promise<any> {
+  checkFile(type: File, required: boolean, recommended: boolean): Promise<FileResult> {
     return axios(`${this.url}/${File[type]}.json`)
       .then(({ data }) => ({
         required,
+        recommended,
         errors: validators[type](data),
         exists: true,
         file: `${File[type]}.json`,
@@ -168,29 +188,30 @@ class Runner {
       }))
       .catch(err => ({
         required,
+        recommended,
         errors: required ? err : null,
         exists: false,
         file: `${File[type]}.json`,
         url: `${this.url}/${File[type]}.json`
-      }))
+      }));
   }
 
-  async validation() {
+  async validation(): Promise<RunnerResult> {
     const gbfsResult = await this.checkAutodiscovery()
     return Promise.all([
       Promise.resolve(gbfsResult),
-      this.checkFile(File.gbfs_versions, false),
-      this.checkFile(File.system_information, true),
-      this.checkFile(File.vehicle_types, false),
-      this.checkFile(File.station_information, this.options.docked),
-      this.checkFile(File.station_status, this.options.docked),
-      this.checkFile(File.free_bike_status, this.options.freefloating),
-      this.checkFile(File.system_hours, false),
-      this.checkFile(File.system_calendar, false),
-      this.checkFile(File.system_regions, false),
-      this.checkFile(File.system_pricing_plans, false),
-      this.checkFile(File.system_alerts, false),
-      this.checkFile(File.geofencing_zones, false)
+      this.checkFile(File.gbfs_versions, false, false),
+      this.checkFile(File.system_information, true, true),
+      this.checkFile(File.vehicle_types, false, true),
+      this.checkFile(File.station_information, this.options.docked, this.options.docked),
+      this.checkFile(File.station_status, this.options.docked, this.options.docked),
+      this.checkFile(File.free_bike_status, this.options.freefloating, this.options.freefloating),
+      this.checkFile(File.system_hours, false, false),
+      this.checkFile(File.system_calendar, false, false),
+      this.checkFile(File.system_regions, false, false),
+      this.checkFile(File.system_pricing_plans, true, true),
+      this.checkFile(File.system_alerts, false, false),
+      this.checkFile(File.geofencing_zones, false, false)
     ]).then(result => {
       return {
         summary: {
@@ -198,7 +219,7 @@ class Runner {
         },
         files: result
       }
-    })
+    });
   }
 }
 
