@@ -2,7 +2,7 @@ import Ajv, { Schema } from 'ajv';
 import formatsPlugin from 'ajv-formats';
 
 const validate = <T>(schema: Schema, object: T) => {
-  const ajv = new Ajv({ allErrors: true });
+  const ajv = new Ajv({ allErrors: true, strict: false });
   formatsPlugin(ajv);
   const validate = ajv.compile<T>(schema);
   const valid = validate(object);
