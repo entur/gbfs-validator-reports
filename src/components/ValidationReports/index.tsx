@@ -8,6 +8,7 @@ import {
   TableBody,
   TableHead,
   TableRow,
+  useSortableData,
 } from '@entur/table';
 import { SecondarySquareButton } from '@entur/button';
 import { ValidationInfoIcon, WarningIcon } from '@entur/icons';
@@ -246,23 +247,31 @@ const sortReports = (a: any, b: any) => {
   }
 }
 
-const ValidationReports = ({ reports, filter }: any) => (
-  <Table>
-    <TableHead>
-      <TableRow>
-        <HeaderCell padding="radio">{''}</HeaderCell>
-        <HeaderCell>Provider</HeaderCell>
-        <HeaderCell>Version</HeaderCell>
-        <HeaderCell>Report time</HeaderCell>
-        <HeaderCell>Valid</HeaderCell>
-      </TableRow>
-    </TableHead>
-    <TableBody>
-      {reports.filter((r: any) => filter ? r.provider.indexOf(filter) > -1 : true).sort(sortReports).map((report: any) => (
-        <ExpRow report={report} key={report.timestamp} />
-      ))}
-    </TableBody>
-  </Table>
-);
+const ValidationReports = ({ reports, filter }: any) => {
+  const {
+    sortedData,
+    getSortableHeaderProps,
+    getSortableTableProps,
+  } = useSortableData<{provider:string, hasErrors:boolean}>(reports);
+
+  return (
+    <Table {...getSortableTableProps}>
+      <TableHead>
+        <TableRow>
+          <HeaderCell padding="radio">{''}</HeaderCell>
+          <HeaderCell {...getSortableHeaderProps({ name: 'provider' })}>Provider</HeaderCell>
+          <HeaderCell>Version</HeaderCell>
+          <HeaderCell>Report time</HeaderCell>
+          <HeaderCell {...getSortableHeaderProps({ name: 'hasErrors' })}>Valid</HeaderCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {sortedData.filter((r: any) => filter ? r.provider.indexOf(filter) > -1 : true).map((report: any) => (
+          <ExpRow report={report} key={report.timestamp} />
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
 
 export default ValidationReports;
