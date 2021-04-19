@@ -13,7 +13,7 @@ import systemRegions from "./validation/systemRegions";
 import systemPricingPlans from "./validation/systemPricingPlans";
 import systemAlerts from "./validation/systemAlerts";
 import geofencingZones from "./validation/geofencingZones";
-import { ErrorObject } from "ajv";
+import {ErrorObject} from "ajv";
 
 enum File {
   gbfs = "gbfs",
@@ -49,24 +49,24 @@ const validators: Record<File, Validator> = {
   [File.system_pricing_plans]: systemPricingPlans,
   [File.system_alerts]: systemAlerts,
   [File.geofencing_zones]: geofencingZones,
-}
+};
 
 function hasErrors(data: any, required?: boolean): boolean {
-  let hasError = false
+  let hasError = false;
 
   data.forEach((el: any) => {
     if (Array.isArray(el)) {
       if (hasErrors(el, required)) {
-        hasError = true
+        hasError = true;
       }
     } else {
       if (required && !el.exists ? true : !!el.errors) {
-        hasError = true
+        hasError = true;
       }
     }
-  })
+  });
 
-  return hasError
+  return hasError;
 }
 
 export type RunnerOptions = {
@@ -98,106 +98,106 @@ class Runner {
   url: string;
   options: RunnerOptions;
 
-  constructor(url: string, { docked = false, freefloating = false } = {}) {
-    this.url = url
+  constructor(url: string, {docked = false, freefloating = false} = {}) {
+    this.url = url;
     this.options = {
       docked,
-      freefloating
-    }
+      freefloating,
+    };
   }
 
   alternativeAutoDiscovery(url: string) {
     return axios(url)
-      .then(({ data }) => {
-        if (typeof data !== "object") {
+        .then(({data}) => {
+          if (typeof data !== "object") {
+            return {
+              recommended: true,
+              required: true,
+              errors: false,
+              exists: false,
+              file: "gbfs.json",
+              url: null,
+            };
+          }
+
+          const errors = validators[File.gbfs](data);
+
           return {
+            errors,
+            url,
+            recommended: true,
+            required: true,
+            exists: true,
+            file: "gbfs.json",
+          };
+        })
+        .catch(() => {
+          return {
+            url,
             recommended: true,
             required: true,
             errors: false,
             exists: false,
             file: "gbfs.json",
-            url: null
-          }
-        }
-
-        const errors = validators[File.gbfs](data);
-
-        return {
-          errors,
-          url,
-          recommended: true,
-          required: true,
-          exists: true,
-          file: "gbfs.json",
-        }
-      })
-      .catch(() => {
-        return {
-          url,
-          recommended: true,
-          required: true,
-          errors: false,
-          exists: false,
-          file: "gbfs.json",
-        }
-      })
+          };
+        });
   }
 
   checkAutodiscovery() {
     return axios(this.url)
-      .then(({ status, data }) => {
-        if (typeof data !== "object") {
-          return this.alternativeAutoDiscovery(`${this.url}/gbfs.json`)
-        }
+        .then(({status, data}) => {
+          if (typeof data !== "object") {
+            return this.alternativeAutoDiscovery(`${this.url}/gbfs.json`);
+          }
 
-        const errors = validators[File.gbfs](data)
-        return {
-          errors,
-          url: this.url,
-          recommended: true,
-          required: true,
-          exists: true,
-          file: "gbfs.json",
-        }
-      })
-      .catch(() => {
-        if (!this.url.match(/gbfs.json$/)) {
-          return this.alternativeAutoDiscovery(`${this.url}/gbfs.json`);
-        }
+          const errors = validators[File.gbfs](data);
+          return {
+            errors,
+            url: this.url,
+            recommended: true,
+            required: true,
+            exists: true,
+            file: "gbfs.json",
+          };
+        })
+        .catch(() => {
+          if (!this.url.match(/gbfs.json$/)) {
+            return this.alternativeAutoDiscovery(`${this.url}/gbfs.json`);
+          }
 
-        return {
-          url: this.url,
-          recommended: true,
-          required: true,
-          errors: false,
-          exists: false,
-          file: "gbfs.json",
-        }
-      })
+          return {
+            url: this.url,
+            recommended: true,
+            required: true,
+            errors: false,
+            exists: false,
+            file: "gbfs.json",
+          };
+        });
   }
 
   checkFile(type: File, required: boolean, recommended: boolean): Promise<FileResult> {
     return axios(`${this.url}/${File[type]}.json`)
-      .then(({ data }) => ({
-        required,
-        recommended,
-        errors: validators[type](data),
-        exists: true,
-        file: `${File[type]}.json`,
-        url: `${this.url}/${File[type]}.json`
-      }))
-      .catch(err => ({
-        required,
-        recommended,
-        errors: required ? err : null,
-        exists: false,
-        file: `${File[type]}.json`,
-        url: `${this.url}/${File[type]}.json`
-      }));
+        .then(({data}) => ({
+          required,
+          recommended,
+          errors: validators[type](data),
+          exists: true,
+          file: `${File[type]}.json`,
+          url: `${this.url}/${File[type]}.json`,
+        }))
+        .catch((err) => ({
+          required,
+          recommended,
+          errors: required ? err : null,
+          exists: false,
+          file: `${File[type]}.json`,
+          url: `${this.url}/${File[type]}.json`,
+        }));
   }
 
   async validation(): Promise<RunnerResult> {
-    const gbfsResult = await this.checkAutodiscovery()
+    const gbfsResult = await this.checkAutodiscovery();
     return Promise.all([
       Promise.resolve(gbfsResult),
       this.checkFile(File.gbfs_versions, false, false),
@@ -211,14 +211,14 @@ class Runner {
       this.checkFile(File.system_regions, false, false),
       this.checkFile(File.system_pricing_plans, true, true),
       this.checkFile(File.system_alerts, false, false),
-      this.checkFile(File.geofencing_zones, false, false)
-    ]).then(result => {
+      this.checkFile(File.geofencing_zones, false, false),
+    ]).then((result) => {
       return {
         summary: {
-          hasErrors: hasErrors(result)
+          hasErrors: hasErrors(result),
         },
-        files: result
-      }
+        files: result,
+      };
     });
   }
 }
