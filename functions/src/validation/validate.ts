@@ -1,8 +1,11 @@
-import Ajv, {ErrorObject, Schema} from "ajv";
-import formatsPlugin from "ajv-formats";
+import Ajv, { ErrorObject, Schema } from 'ajv';
+import formatsPlugin from 'ajv-formats';
 
-const validate = <T>(schema: Schema, object: T): boolean | ErrorObject<string, Record<string, any>>[] => {
-  const ajv = new Ajv({allErrors: true, strict: false});
+const validate = <T>(
+  schema: Schema,
+  object: T,
+): boolean | ErrorObject<string, Record<string, any>>[] => {
+  const ajv = new Ajv({ allErrors: true, strict: false });
   formatsPlugin(ajv);
   const validate = ajv.compile<T>(schema);
   const valid = validate(object);
@@ -15,4 +18,3 @@ const validate = <T>(schema: Schema, object: T): boolean | ErrorObject<string, R
 };
 
 export default validate;
-
