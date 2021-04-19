@@ -237,16 +237,6 @@ const DetailsTable = ({ details }: any) => {
   );
 };
 
-const sortReports = (a: any, b: any) => {
-  if (a.provider > b.provider) {
-    return 1;
-  } else if (b.provider > a.provider) {
-    return -1;
-  } else {
-    return 0;
-  }
-}
-
 const ValidationReports = ({ reports, filter }: any) => {
   const {
     sortedData,
