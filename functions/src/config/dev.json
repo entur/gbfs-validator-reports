@@ -141,6 +141,27 @@
       "docked": false
     },
     {
+      "provider": "oslobysykkel_original",
+      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/oslobysykkel/original",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
+      "provider": "bergenbysykkel_original",
+      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/bergenbysykkel/original",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
+      "provider": "trondheimbysykkel_original",
+      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/trondheimbysykkel/original",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
       "provider": "voioslo_entur",
       "url": "https://api.dev.entur.io/mobility/v2/gbfs/voioslo",
       "version": "2.2",
@@ -188,6 +209,48 @@
       "version": "2.2",
       "freefloating": true,
       "docked": false
+    },
+    {
+      "provider": "oslobysykkel_original",
+      "url": "https://api.dev.entur.io/mobility/v2/gbfs/oslobysykkel",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
+      "provider": "bergenbysykkel_original",
+      "url": "https://api.dev.entur.io/mobility/v2/gbfs/bergenbysykkel",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
+      "provider": "trondheimbysykkel_original",
+      "url": "https://api.dev.entur.io/mobility/v2/gbfs/trondheimbysykkel",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
+      "provider": "kolumbusbysykkel_original",
+      "url": "https://api.dev.entur.io/mobility/v2/gbfs/kolumbusbysykkel",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
+      "provider": "lillestrombysykkel_original",
+      "url": "https://api.dev.entur.io/mobility/v2/gbfs/lillestrombysykkel",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
+      "provider": "drammenbysykkel_original",
+      "url": "https://api.dev.entur.io/mobility/v2/gbfs/drammenbysykkel",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
     },
     {
       "provider": "entur-car-sharing-poc",
