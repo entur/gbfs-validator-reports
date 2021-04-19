@@ -8,6 +8,10 @@
         {
           "queryScope": "COLLECTION_GROUP",
           "order": "DESCENDING"
+        },
+        {
+          "queryScope": "COLLECTION",
+          "order": "ASCENDING"
         }
       ]
     }
