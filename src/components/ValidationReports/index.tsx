@@ -236,7 +236,17 @@ const DetailsTable = ({ details }: any) => {
   );
 };
 
-const ValidationReports = ({ reports }: any) => (
+const sortReports = (a: any, b: any) => {
+  if (a.provider > b.provider) {
+    return 1;
+  } else if (b.provider > a.provider) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
+
+const ValidationReports = ({ reports, filter }: any) => (
   <Table>
     <TableHead>
       <TableRow>
@@ -248,7 +258,7 @@ const ValidationReports = ({ reports }: any) => (
       </TableRow>
     </TableHead>
     <TableBody>
-      {reports.map((report: any) => (
+      {reports.filter((r: any) => filter ? r.provider.indexOf(filter) > -1 : true).sort(sortReports).map((report: any) => (
         <ExpRow report={report} key={report.timestamp} />
       ))}
     </TableBody>

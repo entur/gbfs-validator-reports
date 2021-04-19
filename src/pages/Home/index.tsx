@@ -4,9 +4,12 @@ import { Heading1 } from '@entur/typography';
 import ValidationReports from '../../components/ValidationReports';
 
 import firebase from 'firebase/app';
+import { TextField } from '@entur/form';
+import { SearchIcon } from '@entur/icons';
 
 const Home: React.FC = () => {
   const [reports, setReports] = useState<any>(null);
+  const [filterSearch, setFilterSearch] = useState<string>();
 
   useEffect(() => {
     const fetchReports = async () => {
@@ -28,7 +31,15 @@ const Home: React.FC = () => {
   return (
     <div>
       <Heading1>GBFS Validation reports</Heading1>
-      {reports && <ValidationReports reports={reports} />}
+      <TextField
+        label="Søk på provider"
+        style={{ width: '15rem' }}
+        prepend={<SearchIcon inline />}
+        value={filterSearch}
+        placeholder="voi"
+        onChange={e => setFilterSearch(e.target.value)}
+      />
+      {reports && <ValidationReports reports={reports} filter={filterSearch} />}
     </div>
   );
 };
