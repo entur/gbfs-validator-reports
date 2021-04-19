@@ -50,6 +50,48 @@
       "docked": false
     },
     {
+      "provider": "oslobysykkel_proxy",
+      "url": "https://api.dev.entur.io/mobility/v1/bikes/v2_2_proxy/oslobysykkel",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
+      "provider": "bergenbysykkel_proxy",
+      "url": "https://api.dev.entur.io/mobility/v1/bikes/v2_2_proxy/bergenbysykkel",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
+      "provider": "trondheimbysykkel_proxy",
+      "url": "https://api.dev.entur.io/mobility/v1/bikes/v2_2_proxy/trondheimbysykkel",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
+      "provider": "kolumbusbysykkel_proxy",
+      "url": "https://api.dev.entur.io/mobility/v1/bikes/v2_2_proxy/kolumbusbysykkel",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
+      "provider": "lillestrombysykkel_proxy",
+      "url": "https://api.dev.entur.io/mobility/v1/bikes/v2_2_proxy/lillestrombysykkel",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
+      "provider": "drammenbysykkel_proxy",
+      "url": "https://api.dev.entur.io/mobility/v1/bikes/v2_2_proxy/drammenbysykkel",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
+    },
+    {
       "provider": "voioslo_original",
       "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/voioslo/original",
       "version": "2.2",
@@ -146,6 +188,13 @@
       "version": "2.2",
       "freefloating": true,
       "docked": false
+    },
+    {
+      "provider": "entur-car-sharing-poc",
+      "url": "https://storage.googleapis.com/ror-mobility-car-sharing-poc/gbfs.json",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
     }
   ]
 }
