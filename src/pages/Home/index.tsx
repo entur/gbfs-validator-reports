@@ -10,7 +10,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const fetchReports = async () => {
-      const timestamp = new Date().getTime() - (1000 * 60 * 60); // last hour
+      const timestamp = new Date().getTime() - (1000 * 60 * 60 * 24); // last 24 hours
       const db = firebase.firestore();
       const providers = await db.collection('providers').get();
       const snapshot = await db.collectionGroup('reports')
