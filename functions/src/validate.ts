@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import Runner from "./runner";
-const config = require("./config/dev.json");
+import * as config from "./config/dev.json";
 
 type Feed = {
   provider: string;
