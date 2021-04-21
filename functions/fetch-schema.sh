@@ -12,12 +12,10 @@ validate () {
     fi
 }
 
-GITHUB_URL="https://github.com/MobilityData/gbfs-json-schema/archive/8179f43.zip"
-DESTINATION_PATH="./schema"
-
-validate "GITHUB_URL" ${GITHUB_URL}
+validate "SCHEMA_VERSION" ${SCHEMA_VERSION}
 validate "DESTINATION_PATH" ${DESTINATION_PATH}
 
+GITHUB_URL="https://github.com/MobilityData/gbfs-json-schema/archive/$SCHEMA_VERSION.zip"
 ZIP_FILE=downloaded.zip
 
 echo "GBFS JSON schema repo github URL: $GITHUB_URL"
@@ -50,9 +48,6 @@ if [ -f ${ZIP_FILE} ]; then
     echo "Remove intermediate folder" &&
     mv ${DESTINATION_PATH}/**/* ${DESTINATION_PATH} &&
     rm -rf ${DESTINATION_PATH}/*/
-
-    echo "Remove non-schema files"
-    rm ${DESTINATION_PATH}/.gitattributes
 
     echo "JSON schema extracted to $DESTINATION_PATH"
     } ||

@@ -9,7 +9,7 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "fetch:schema": "./fetch-schema.sh"
+    "fetch:schema": "SCHEMA_VERSION=v2.2 DESTINATION_PATH=./schema ./fetch-schema.sh"
   },
   "engines": {
     "node": "12"
