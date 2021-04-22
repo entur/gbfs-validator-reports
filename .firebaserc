@@ -1,6 +1,8 @@
 {
   "projects": {
     "dev": "gbfs-validator-reports-dev",
+    "staging": "gbfs-validator-reports-staging",
+    "prod": "gbfs-validator-reports-prod",
     "default": "gbfs-validator-reports-dev"
   }
 }

@@ -1,6 +1,21 @@
 import * as functions from 'firebase-functions';
 import Runner from './runner';
-import * as config from './config/dev.json';
+import * as localConfig from './config/local.json';
+import * as devConfig from './config/dev.json';
+import * as stagingConfig from './config/staging.json';
+import * as productionConfig from './config/production.json';
+import {PubSub} from '@google-cloud/pubsub';
+
+const configMapping: Record<string, any> = {
+  'local': localConfig,
+  'gbfs-validator-reports-dev': devConfig,
+  'gbfs-validator-reports-staging': stagingConfig,
+  'gbfs-validator-reports-prod': productionConfig
+};
+
+const config = configMapping[process.env.GCP_PROJECT ?? 'local'];
+
+const pubsub = new PubSub();
 
 type Feed = {
   provider: string;
@@ -71,3 +86,8 @@ export default function (admin: any) {
     }
   });
 }
+
+export const manualTrigger = functions.https.onRequest(async (request, response) => {
+  await pubsub.topic('firebase-schedule-validate').publishJSON({});
+  response.sendStatus(204);
+});

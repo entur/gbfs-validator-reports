@@ -9,6 +9,10 @@ const init = async () => {
   const firebaseConfigResponse = await fetch('/__/firebase/init.json');
   firebase.initializeApp(await firebaseConfigResponse.json());
 
+  if (window.location.hostname === 'localhost') {
+    firebase.firestore().useEmulator('localhost', 8080);
+  }
+
   ReactDOM.render(
     <React.StrictMode>
       <App />
