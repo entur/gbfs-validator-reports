@@ -1,0 +1,11 @@
+{
+    "feeds": [
+      {
+        "provider": "voioslo_proxy",
+        "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/voioslo",
+        "version": "2.2",
+        "freefloating": true,
+        "docked": false
+      }
+    ]
+}
