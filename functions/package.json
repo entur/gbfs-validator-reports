@@ -2,6 +2,7 @@
   "name": "functions",
   "scripts": {
     "preinstall": "npm run fetch:schema",
+    "prebuild": "npm install",
     "lint": "eslint --ext .js,.ts .",
     "build": "tsc",
     "serve": "npm run build && firebase emulators:start --only functions",
@@ -16,6 +17,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@google-cloud/pubsub": "^2.11.0",
     "ajv": "^8.1.0",
     "ajv-formats": "^2.0.2",
     "axios": "^0.21.1",
@@ -23,7 +25,6 @@
     "firebase-functions": "^3.11.0"
   },
   "devDependencies": {
-    "@google-cloud/pubsub": "^2.11.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.6.0",

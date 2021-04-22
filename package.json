@@ -24,10 +24,13 @@
     "react-scripts": "^4.0.1"
   },
   "scripts": {
+    "prestart": "npm run build:functions",
     "start": "run-p --race start:firebase start:react",
     "start:firebase": "firebase emulators:start",
     "start:react": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "run-p build:react build:functions",
+    "build:react": "react-scripts build",
+    "build:functions": "npm run --prefix functions build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
