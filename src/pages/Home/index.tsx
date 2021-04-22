@@ -13,17 +13,16 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const fetchReports = async () => {
-      const timestamp = new Date().getTime() - (1000 * 60 * 60 * 24); // last 24 hours
+      const timestamp = new Date().getTime() - 1000 * 60 * 60 * 24; // last 24 hours
       const db = firebase.firestore();
       const providers = await db.collection('providers').get();
-      const snapshot = await db.collectionGroup('reports')
-        .where("timestamp", ">", timestamp)
-        .orderBy("timestamp", "desc")
+      const snapshot = await db
+        .collectionGroup('reports')
+        .where('timestamp', '>', timestamp)
+        .orderBy('timestamp', 'desc')
         .limit(providers.size)
         .get();
-      setReports(
-        snapshot.docs.map(docSnapshot => docSnapshot.data())
-      );
+      setReports(snapshot.docs.map((docSnapshot) => docSnapshot.data()));
     };
     fetchReports();
   }, []);
@@ -37,7 +36,7 @@ const Home: React.FC = () => {
         prepend={<SearchIcon inline />}
         value={filterSearch}
         placeholder="voi"
-        onChange={e => setFilterSearch(e.target.value)}
+        onChange={(e) => setFilterSearch(e.target.value)}
       />
       {reports && <ValidationReports reports={reports} filter={filterSearch} />}
     </div>

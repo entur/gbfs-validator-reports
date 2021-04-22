@@ -126,7 +126,7 @@ const FileReportErrors = ({ file }: any) => {
         file.languages.map((lang: any, i: number) => {
           if (file.required && !lang.exists) {
             return (
-              <h4> 
+              <h4>
                 Missing file {lang.lang}/{file.file}
               </h4>
             );
@@ -198,17 +198,15 @@ const DetailsTable = ({ details }: any) => {
                 {!file.exists && file?.errors?.message && (
                   <Tooltip
                     placement="top"
-                    content={`Could not validate: ${file.errors.message}`}>
-                      <SecondarySquareButton>
-                        <WarningIcon />
-                      </SecondarySquareButton>
+                    content={`Could not validate: ${file.errors.message}`}
+                  >
+                    <SecondarySquareButton>
+                      <WarningIcon />
+                    </SecondarySquareButton>
                   </Tooltip>
-                  
                 )}
                 {file.exists && file.errors && (
-                  <Tooltip
-                    placement="top"
-                    content="See detailed error report">
+                  <Tooltip placement="top" content="See detailed error report">
                     <SecondarySquareButton
                       onClick={() => {
                         setOpenModal(file);
@@ -242,23 +240,29 @@ const ValidationReports = ({ reports, filter }: any) => {
     sortedData,
     getSortableHeaderProps,
     getSortableTableProps,
-  } = useSortableData<{provider:string, hasErrors:boolean}>(reports);
+  } = useSortableData<{ provider: string; hasErrors: boolean }>(reports);
 
   return (
     <Table {...getSortableTableProps}>
       <TableHead>
         <TableRow>
           <HeaderCell padding="radio">{''}</HeaderCell>
-          <HeaderCell {...getSortableHeaderProps({ name: 'provider' })}>Provider</HeaderCell>
+          <HeaderCell {...getSortableHeaderProps({ name: 'provider' })}>
+            Provider
+          </HeaderCell>
           <HeaderCell>Version</HeaderCell>
           <HeaderCell>Report time</HeaderCell>
-          <HeaderCell {...getSortableHeaderProps({ name: 'hasErrors' })}>Valid</HeaderCell>
+          <HeaderCell {...getSortableHeaderProps({ name: 'hasErrors' })}>
+            Valid
+          </HeaderCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {sortedData.filter((r: any) => filter ? r.provider.indexOf(filter) > -1 : true).map((report: any) => (
-          <ExpRow report={report} key={report.timestamp} />
-        ))}
+        {sortedData
+          .filter((r: any) => (filter ? r.provider.indexOf(filter) > -1 : true))
+          .map((report: any) => (
+            <ExpRow report={report} key={report.timestamp} />
+          ))}
       </TableBody>
     </Table>
   );
