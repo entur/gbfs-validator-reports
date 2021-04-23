@@ -2,140 +2,140 @@
   "feeds": [
     {
       "provider": "voioslo_proxy",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/voioslo",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/voioslo",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "voitrondheim_proxy",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/voitrondheim",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/voitrondheim",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "boltoslo_proxy",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltoslo",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/boltoslo",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "boltlillestrom_proxy",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltlillestrom",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/boltlillestrom",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "boltfredrikstad_proxy",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltfredrikstad",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/boltfredrikstad",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "boltbergen_proxy",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltbergen",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/boltbergen",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "limeoslo_proxy",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/limeoslo",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/limeoslo",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "oslobysykkel_proxy",
-      "url": "https://api.dev.entur.io/mobility/v1/bikes/v2_2_proxy/oslobysykkel",
+      "url": "https://api.staging.entur.io/mobility/v1/bikes/v2_2_proxy/oslobysykkel",
       "version": "2.2",
       "freefloating": false,
       "docked": true
     },
     {
       "provider": "bergenbysykkel_proxy",
-      "url": "https://api.dev.entur.io/mobility/v1/bikes/v2_2_proxy/bergenbysykkel",
+      "url": "https://api.staging.entur.io/mobility/v1/bikes/v2_2_proxy/bergenbysykkel",
       "version": "2.2",
       "freefloating": false,
       "docked": true
     },
     {
       "provider": "trondheimbysykkel_proxy",
-      "url": "https://api.dev.entur.io/mobility/v1/bikes/v2_2_proxy/trondheimbysykkel",
+      "url": "https://api.staging.entur.io/mobility/v1/bikes/v2_2_proxy/trondheimbysykkel",
       "version": "2.2",
       "freefloating": false,
       "docked": true
     },
     {
       "provider": "kolumbusbysykkel_proxy",
-      "url": "https://api.dev.entur.io/mobility/v1/bikes/v2_2_proxy/kolumbusbysykkel",
+      "url": "https://api.staging.entur.io/mobility/v1/bikes/v2_2_proxy/kolumbusbysykkel",
       "version": "2.2",
       "freefloating": false,
       "docked": true
     },
     {
       "provider": "lillestrombysykkel_proxy",
-      "url": "https://api.dev.entur.io/mobility/v1/bikes/v2_2_proxy/lillestrombysykkel",
+      "url": "https://api.staging.entur.io/mobility/v1/bikes/v2_2_proxy/lillestrombysykkel",
       "version": "2.2",
       "freefloating": false,
       "docked": true
     },
     {
       "provider": "drammenbysykkel_proxy",
-      "url": "https://api.dev.entur.io/mobility/v1/bikes/v2_2_proxy/drammenbysykkel",
+      "url": "https://api.staging.entur.io/mobility/v1/bikes/v2_2_proxy/drammenbysykkel",
       "version": "2.2",
       "freefloating": false,
       "docked": true
     },
     {
       "provider": "voioslo_original",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/voioslo/original",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/voioslo/original",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "voitrondheim_original",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/voitrondheim/original",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/voitrondheim/original",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "boltoslo_original",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltoslo/original",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/boltoslo/original",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "boltlillestrom_original",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltlillestrom/original",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/boltlillestrom/original",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "boltfredrikstad_original",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltfredrikstad/original",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/boltfredrikstad/original",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "boltbergen_original",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltbergen/original",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/boltbergen/original",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "limeoslo_original",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/limeoslo/original",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/limeoslo/original",
       "version": "2.2",
       "freefloating": true,
       "docked": false
@@ -163,91 +163,91 @@
     },
     {
       "provider": "voioslo_entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/voioslo",
+      "url": "https://api.staging.entur.io/mobility/v2/gbfs/voioslo",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "voitrondheim_entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/voitrondheim",
+      "url": "https://api.staging.entur.io/mobility/v2/gbfs/voitrondheim",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "boltoslo_entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/boltoslo",
+      "url": "https://api.staging.entur.io/mobility/v2/gbfs/boltoslo",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "boltlillestrom_entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/boltlillestrom",
+      "url": "https://api.staging.entur.io/mobility/v2/gbfs/boltlillestrom",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "boltfredrikstad_entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/boltfredrikstad",
+      "url": "https://api.staging.entur.io/mobility/v2/gbfs/boltfredrikstad",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "boltbergen_entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/boltbergen",
+      "url": "https://api.staging.entur.io/mobility/v2/gbfs/boltbergen",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "limeoslo_entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/limeoslo",
+      "url": "https://api.staging.entur.io/mobility/v2/gbfs/limeoslo",
       "version": "2.2",
       "freefloating": true,
       "docked": false
     },
     {
       "provider": "oslobysykkel_entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/oslobysykkel",
+      "url": "https://api.staging.entur.io/mobility/v2/gbfs/oslobysykkel",
       "version": "2.2",
       "freefloating": false,
       "docked": true
     },
     {
       "provider": "bergenbysykkel_entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/bergenbysykkel",
+      "url": "https://api.staging.entur.io/mobility/v2/gbfs/bergenbysykkel",
       "version": "2.2",
       "freefloating": false,
       "docked": true
     },
     {
       "provider": "trondheimbysykkel_entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/trondheimbysykkel",
+      "url": "https://api.staging.entur.io/mobility/v2/gbfs/trondheimbysykkel",
       "version": "2.2",
       "freefloating": false,
       "docked": true
     },
     {
       "provider": "kolumbusbysykkel_entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/kolumbusbysykkel",
+      "url": "https://api.staging.entur.io/mobility/v2/gbfs/kolumbusbysykkel",
       "version": "2.2",
       "freefloating": false,
       "docked": true
     },
     {
       "provider": "lillestrombysykkel_entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/lillestrombysykkel",
+      "url": "https://api.staging.entur.io/mobility/v2/gbfs/lillestrombysykkel",
       "version": "2.2",
       "freefloating": false,
       "docked": true
     },
     {
       "provider": "drammenbysykkel_entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/drammenbysykkel",
+      "url": "https://api.staging.entur.io/mobility/v2/gbfs/drammenbysykkel",
       "version": "2.2",
       "freefloating": false,
       "docked": true
