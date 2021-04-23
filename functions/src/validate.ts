@@ -14,11 +14,11 @@ const configMapping: Record<string, any> = {
 const getConfig = () => {
   return configMapping[
     JSON.parse(
-      process.env.FIREBASE_CONFIG
-        ?? "{\"projectId\": \"gbfs-validator-reports-dev\"}"
+      process.env.FIREBASE_CONFIG ??
+        '{"projectId": "gbfs-validator-reports-dev"}',
     ).projectId
   ];
-}
+};
 
 const pubsub = new PubSub();
 
