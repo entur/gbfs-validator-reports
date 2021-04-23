@@ -13,8 +13,6 @@ const configMapping: Record<string, any> = {
   'gbfs-validator-reports-prod': productionConfig,
 };
 
-const config = configMapping[process.env.GCP_PROJECT ?? 'local'];
-
 const pubsub = new PubSub();
 
 type Feed = {
@@ -26,6 +24,7 @@ type Feed = {
 };
 
 export default function (admin: any) {
+  const config = configMapping[process.env.GCP_PROJECT ?? 'local'];
   const feeds: Feed[] = config.feeds;
   const db: any = admin.firestore();
   const bucket = (admin.storage() as any).bucket();
