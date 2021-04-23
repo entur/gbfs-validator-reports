@@ -7,11 +7,19 @@ import * as productionConfig from './config/production.json';
 import { PubSub } from '@google-cloud/pubsub';
 
 const configMapping: Record<string, any> = {
-  local: localConfig,
   'gbfs-validator-reports-dev': devConfig,
   'gbfs-validator-reports-staging': stagingConfig,
   'gbfs-validator-reports-prod': productionConfig,
 };
+
+const getConfig = () => {
+  return configMapping[
+    JSON.parse(
+      process.env.FIREBASE_CONFIG
+        ?? "{\"projectId\": \"gbfs-validator-reports-dev\"}"
+    ).projectId
+  ];
+}
 
 const pubsub = new PubSub();
 
@@ -24,7 +32,7 @@ type Feed = {
 };
 
 export default function (admin: any) {
-  const config = configMapping[process.env.GCP_PROJECT ?? 'local'];
+  const config = getConfig();
   const feeds: Feed[] = config.feeds;
   const db: any = admin.firestore();
   const bucket = (admin.storage() as any).bucket();
