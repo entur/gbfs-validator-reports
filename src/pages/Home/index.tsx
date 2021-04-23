@@ -31,7 +31,7 @@ const Home: React.FC = () => {
     <div>
       <Heading1>GBFS Validation reports</Heading1>
       <TextField
-        label="Søk på provider"
+        label="Filter providers"
         style={{ width: '15rem' }}
         prepend={<SearchIcon inline />}
         value={filterSearch}
