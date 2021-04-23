@@ -1,6 +1,5 @@
 import * as functions from 'firebase-functions';
 import Runner from './runner';
-import * as localConfig from './config/local.json';
 import * as devConfig from './config/dev.json';
 import * as stagingConfig from './config/staging.json';
 import * as productionConfig from './config/production.json';
