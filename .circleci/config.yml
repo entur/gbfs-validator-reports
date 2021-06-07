@@ -61,6 +61,10 @@ jobs:
     steps:
     - *attach_workspace
     - run: *firebase_deploy_dev
+    - persist_to_workspace:
+        root: *workspace_root
+        paths:
+        - .
   deploy-staging:
     executor:
       name: node/default
@@ -68,6 +72,10 @@ jobs:
     steps:
     - *attach_workspace
     - run: *firebase_deploy_staging
+    - persist_to_workspace:
+        root: *workspace_root
+        paths:
+        - .
   deploy-prod:
     executor:
       name: node/default
