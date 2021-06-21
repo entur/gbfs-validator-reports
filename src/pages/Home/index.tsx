@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Heading1 } from '@entur/typography';
+import { Heading1, SubParagraph } from '@entur/typography';
 import ValidationReports from '../../components/ValidationReports';
 
 import firebase from 'firebase/app';
@@ -9,6 +9,7 @@ import { SearchIcon } from '@entur/icons';
 import { usePathParam } from '../../usePathParam';
 import { IconButton } from '@entur/button';
 import { BackArrowIcon } from '@entur/icons';
+import { Link } from '@entur/typography';
 
 const Home: React.FC = () => {
   const [reports, setReports] = useState<any>(null);
@@ -51,6 +52,11 @@ const Home: React.FC = () => {
   return (
     <div>
       <Heading1>GBFS Validation reports</Heading1>
+      <SubParagraph>
+        <Link href="https://enturas.atlassian.net/wiki/spaces/PUBLIC/pages/1883439205/Mobility+Data+Collection+-+GBFS+v2.2" target="_NEW">
+          Mobility Data Collection - GBFS v2.2 @ ENtur
+        </Link>
+      </SubParagraph>
       {selectedSlug === null && (
         <TextField
           label="Filter systems"
