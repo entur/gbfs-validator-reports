@@ -10,14 +10,15 @@ import {
   TableRow,
   useSortableData,
 } from '@entur/table';
-import { SecondarySquareButton } from '@entur/button';
+import { IconButton, SecondarySquareButton } from '@entur/button';
 import { ValidationInfoIcon, WarningIcon } from '@entur/icons';
 import { Modal } from '@entur/modal';
 import { ListItem, PreformattedText, UnorderedList } from '@entur/typography';
 import { Pagination } from '@entur/menu';
 import { Tooltip } from '@entur/tooltip';
+import { StatsIcon } from '@entur/icons';
 
-const ExpRow = ({ report }: any) => {
+const ExpRow = ({ report, selectedSlug, setSelectedSlug }: any) => {
   const [open, setopen] = useState<boolean>(false);
   const [details, setDetails] = useState<any>(null);
 
@@ -39,12 +40,20 @@ const ExpRow = ({ report }: any) => {
         <DataCell>
           <ExpandRowButton onClick={() => setopen(!open)} open={open} />
         </DataCell>
-        <DataCell>{report.provider}</DataCell>
+        <DataCell>{report.slug}</DataCell>
         <DataCell>{report.version}</DataCell>
         <DataCell>{new Date(report.timestamp).toLocaleString()}</DataCell>
         <DataCell status={report.hasErrors ? 'negative' : 'positive'}>
           {report.hasErrors ? 'Invalid' : 'Valid'}
         </DataCell>
+        {!selectedSlug && (
+          <DataCell>
+            <IconButton onClick={() => setSelectedSlug(report.slug)}>
+              <StatsIcon />
+            </IconButton>
+          </DataCell>
+        )}
+        
       </TableRow>
       <ExpandableRow colSpan={5} open={open}>
         <DetailsTable details={details} />
@@ -235,7 +244,7 @@ const DetailsTable = ({ details }: any) => {
   );
 };
 
-const ValidationReports = ({ reports, filter }: any) => {
+const ValidationReports = ({ reports, filter, selectedSlug, setSelectedSlug }: any) => {
   const {
     sortedData,
     getSortableHeaderProps,
@@ -248,7 +257,7 @@ const ValidationReports = ({ reports, filter }: any) => {
         <TableRow>
           <HeaderCell padding="radio">{''}</HeaderCell>
           <HeaderCell {...getSortableHeaderProps({ name: 'provider' })}>
-            Provider
+            System
           </HeaderCell>
           <HeaderCell>Version</HeaderCell>
           <HeaderCell>Report time</HeaderCell>
@@ -259,9 +268,14 @@ const ValidationReports = ({ reports, filter }: any) => {
       </TableHead>
       <TableBody>
         {sortedData
-          .filter((r: any) => (filter ? r.provider.indexOf(filter) > -1 : true))
+          .filter((r: any) => (filter ? r.slug.indexOf(filter) > -1 : true))
           .map((report: any) => (
-            <ExpRow report={report} key={report.timestamp} />
+            <ExpRow 
+              report={report}
+              key={report.timestamp}
+              selectedSlug={selectedSlug}
+              setSelectedSlug={setSelectedSlug}
+            />
           ))}
       </TableBody>
     </Table>

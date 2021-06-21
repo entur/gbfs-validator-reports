@@ -23,7 +23,8 @@ const getConfig = () => {
 const pubsub = new PubSub();
 
 type Feed = {
-  provider: string;
+  slug: string;
+  stage: string;
   url: string;
   version: string;
   freefloating: boolean;
@@ -49,7 +50,7 @@ export default function (admin: any) {
           const report = await validator.validation();
           const timestamp = new Date().getTime();
           const blob = bucket.file(
-            `reports/${feed.provider}/${feed.provider}_${timestamp}.json`,
+            `reports/${feed.slug}_${feed.stage}/${feed.slug}_${feed.stage}_${timestamp}.json`,
           );
           const blobStream = blob.createWriteStream({
             gzip: true,
@@ -68,15 +69,16 @@ export default function (admin: any) {
 
           const provider = await db
             .collection('providers')
-            .doc(feed.provider)
+            .doc(`${feed.slug}_${feed.stage}`)
             .get();
 
-          if (!provider || !provider.exists) {
+          if (!provider || !provider.exists || !provider.slug) {
             await provider.ref.set(feed, { merge: true });
           }
 
           await provider.ref.collection('reports').add({
-            provider: feed.provider,
+            slug: feed.slug,
+            stage: feed.stage,
             timestamp,
             version: feed.version,
             hasErrors: report.summary.hasErrors,
