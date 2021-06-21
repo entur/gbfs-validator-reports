@@ -3,7 +3,8 @@
 const app = jest.createMockFromModule('firebase/app');
 
 const docData = {
-  provider: 'test-provider',
+  slug: 'test-provider',
+  stage: 'original',
   timestamp: 1,
   version: 2.2,
   hasErrors: false
@@ -13,15 +14,7 @@ const docResult = {
   data: () => docData
 };
 
-const collection = () => {
-  return {
-    get: () => {
-      return {
-        size: 1
-      };
-    }
-  };
-};
+const collection = () => query;
 
 const query = {
   where: () => query,
@@ -29,6 +22,7 @@ const query = {
   limit: () => query,
   get: () => {
     return {
+      size: 1,
       docs: [docResult]
     }
   }
