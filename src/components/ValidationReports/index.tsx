@@ -17,8 +17,10 @@ import { ListItem, PreformattedText, UnorderedList } from '@entur/typography';
 import { Pagination } from '@entur/menu';
 import { Tooltip } from '@entur/tooltip';
 import { StatsIcon } from '@entur/icons';
+import { useHistory } from 'react-router-dom';
 
-const ExpRow = ({ report, selectedSlug, setSelectedSlug }: any) => {
+const ExpRow = ({ report, selectedSlug }: any) => {
+  const history = useHistory();
   const [open, setopen] = useState<boolean>(false);
   const [details, setDetails] = useState<any>(null);
 
@@ -48,7 +50,7 @@ const ExpRow = ({ report, selectedSlug, setSelectedSlug }: any) => {
         </DataCell>
         {!selectedSlug && (
           <DataCell>
-            <IconButton onClick={() => setSelectedSlug(report.slug)}>
+            <IconButton onClick={() => history.push(`/${report.slug}`)}>
               <StatsIcon />
             </IconButton>
           </DataCell>
@@ -244,7 +246,7 @@ const DetailsTable = ({ details }: any) => {
   );
 };
 
-const ValidationReports = ({ reports, filter, selectedSlug, setSelectedSlug }: any) => {
+const ValidationReports = ({ reports, filter, selectedSlug }: any) => {
   const {
     sortedData,
     getSortableHeaderProps,
@@ -274,7 +276,6 @@ const ValidationReports = ({ reports, filter, selectedSlug, setSelectedSlug }: a
               report={report}
               key={report.timestamp}
               selectedSlug={selectedSlug}
-              setSelectedSlug={setSelectedSlug}
             />
           ))}
       </TableBody>

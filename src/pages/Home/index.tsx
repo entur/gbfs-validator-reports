@@ -6,26 +6,31 @@ import ValidationReports from '../../components/ValidationReports';
 import firebase from 'firebase/app';
 import { TextField } from '@entur/form';
 import { SearchIcon } from '@entur/icons';
-import { usePathParam } from '../../usePathParam';
 import { IconButton } from '@entur/button';
 import { BackArrowIcon } from '@entur/icons';
 import { Link } from '@entur/typography';
+import { useHistory, useParams } from 'react-router-dom';
 
-const Home: React.FC = () => {
+type PathParams = {
+  slug: string;
+}
+
+const Home = () => {
   const [reports, setReports] = useState<any>(null);
   const [filterSearch, setFilterSearch] = useState<string>();
-  const [selectedSlug, setSelectedSlug] = usePathParam(0);
+  const { slug } = useParams<PathParams>();
+  const history = useHistory();
 
   useEffect(() => {
     const fetchReports = async () => {
       const timestamp = new Date().getTime() - 1000 * 60 * 60 * 24; // last 24 hours
       const db = firebase.firestore();
 
-      if (selectedSlug) {
+      if (slug) {
         const snapshot = await db
           .collectionGroup('reports')
           .where('stage', '==', 'original')
-          .where('slug', '==', selectedSlug)
+          .where('slug', '==', slug)
           .where('timestamp', '>', timestamp)
           .orderBy('timestamp', 'desc')
           .limit(25)
@@ -47,7 +52,7 @@ const Home: React.FC = () => {
       }
     };
     fetchReports();
-  }, [selectedSlug]);
+  }, [slug]);
 
   return (
     <div>
@@ -57,7 +62,7 @@ const Home: React.FC = () => {
           Mobility Data Collection - GBFS v2.2 @ ENtur
         </Link>
       </SubParagraph>
-      {selectedSlug === null && (
+      {!slug && (
         <TextField
           label="Filter systems"
           style={{ width: '15rem' }}
@@ -68,8 +73,8 @@ const Home: React.FC = () => {
         />
       )}
 
-      {selectedSlug && (
-        <IconButton onClick={() => setSelectedSlug(null)}>
+      {slug && (
+        <IconButton onClick={() => history.push('/')}>
           <BackArrowIcon />
         </IconButton>
         
@@ -79,8 +84,7 @@ const Home: React.FC = () => {
         <ValidationReports
           reports={reports.filter((report: any) => report.stage === 'original')}
           filter={filterSearch}
-          selectedSlug={selectedSlug}
-          setSelectedSlug={setSelectedSlug}
+          selectedSlug={slug}
         />
       )}
     </div>
