@@ -6,7 +6,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 const init = async () => {
-  const firebaseConfigResponse = await fetch('/__/firebase/init.json');
+  const firebaseConfigResponse = await fetch(process.env.PUBLIC_URL + '/__/firebase/init.json');
   firebase.initializeApp(await firebaseConfigResponse.json());
 
   if (window.location.hostname === 'localhost') {

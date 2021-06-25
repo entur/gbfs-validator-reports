@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Heading1, SubParagraph } from '@entur/typography';
+import { Heading1, Paragraph, SubParagraph } from '@entur/typography';
 import ValidationReports from '../../components/ValidationReports';
 
 import firebase from 'firebase/app';
@@ -41,14 +41,16 @@ const Home = () => {
           .where('stage', '==', 'original')
           .get();
 
-        const snapshot = await db
-          .collectionGroup('reports')
-          .where('stage', '==', 'original')
-          .where('timestamp', '>', timestamp)
-          .orderBy('timestamp', 'desc')
-          .limit(providers.size)
-          .get();
-        setReports(snapshot.docs.map((docSnapshot) => docSnapshot.data()));
+        if (providers.size > 0) {
+          const snapshot = await db
+            .collectionGroup('reports')
+            .where('stage', '==', 'original')
+            .where('timestamp', '>', timestamp)
+            .orderBy('timestamp', 'desc')
+            .limit(providers.size)
+            .get();
+          setReports(snapshot.docs.map((docSnapshot) => docSnapshot.data()));
+        }
       }
     };
     fetchReports();
@@ -74,7 +76,7 @@ const Home = () => {
       )}
 
       {slug && (
-        <IconButton onClick={() => history.push('/')}>
+        <IconButton onClick={() => history.push(`/`)}>
           <BackArrowIcon />
         </IconButton>
         
@@ -86,6 +88,10 @@ const Home = () => {
           filter={filterSearch}
           selectedSlug={slug}
         />
+      )}
+
+      {!reports && (
+        <Paragraph>No available reports</Paragraph>
       )}
     </div>
   );

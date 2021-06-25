@@ -50,7 +50,7 @@ const ExpRow = ({ report, selectedSlug }: any) => {
         </DataCell>
         {!selectedSlug && (
           <DataCell>
-            <IconButton onClick={() => history.push(`/${report.slug}`)}>
+            <IconButton onClick={() => history.push(`${report.slug}`)}>
               <StatsIcon />
             </IconButton>
           </DataCell>
