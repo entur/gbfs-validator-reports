@@ -291,7 +291,7 @@
     {
       "slug": "entur-car-sharing-poc",
       "stage": "original",
-      "url": "https://storage.googleapis.com/ror-mobility-car-sharing-poc/gbfs.json",
+      "url": "https://storage.googleapis.com/ror-mobility-car-sharing-poc",
       "version": "2.2",
       "freefloating": false,
       "docked": true
@@ -299,7 +299,7 @@
     {
       "slug": "moveabout",
       "stage": "original",
-      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/moveabout/original/gbfs.json",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/moveabout/original",
       "version": "2.2",
       "freefloating": false,
       "docked": true
