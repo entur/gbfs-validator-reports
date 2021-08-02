@@ -13,7 +13,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 type PathParams = {
   slug: string;
-}
+};
 
 const Home = () => {
   const [reports, setReports] = useState<any>(null);
@@ -37,7 +37,8 @@ const Home = () => {
           .get();
         setReports(snapshot.docs.map((docSnapshot) => docSnapshot.data()));
       } else {
-        const providers = await db.collection('providers')
+        const providers = await db
+          .collection('providers')
           .where('stage', '==', 'original')
           .get();
 
@@ -60,7 +61,10 @@ const Home = () => {
     <div>
       <Heading1>GBFS Validation reports</Heading1>
       <SubParagraph>
-        <Link href="https://enturas.atlassian.net/wiki/spaces/PUBLIC/pages/1883439205/Mobility+Data+Collection+-+GBFS+v2.2" target="_NEW">
+        <Link
+          href="https://enturas.atlassian.net/wiki/spaces/PUBLIC/pages/1883439205/Mobility+Data+Collection+-+GBFS+v2.2"
+          target="_NEW"
+        >
           Mobility Data Collection - GBFS v2.2 @ ENtur
         </Link>
       </SubParagraph>
@@ -79,9 +83,8 @@ const Home = () => {
         <IconButton onClick={() => history.push(`/`)}>
           <BackArrowIcon />
         </IconButton>
-        
       )}
-      
+
       {reports && (
         <ValidationReports
           reports={reports.filter((report: any) => report.stage === 'original')}
@@ -90,9 +93,7 @@ const Home = () => {
         />
       )}
 
-      {!reports && (
-        <Paragraph>No available reports</Paragraph>
-      )}
+      {!reports && <Paragraph>No available reports</Paragraph>}
     </div>
   );
 };

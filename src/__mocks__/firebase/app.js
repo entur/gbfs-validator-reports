@@ -7,11 +7,11 @@ const docData = {
   stage: 'original',
   timestamp: 1,
   version: 2.2,
-  hasErrors: false
+  hasErrors: false,
 };
 
 const docResult = {
-  data: () => docData
+  data: () => docData,
 };
 
 const collection = () => query;
@@ -23,19 +23,19 @@ const query = {
   get: () => {
     return {
       size: 1,
-      docs: [docResult]
-    }
-  }
-}
+      docs: [docResult],
+    };
+  },
+};
 
 const collectionGroup = () => query;
 
 const firestore = () => {
   return {
     collection,
-    collectionGroup
-  }
-}
+    collectionGroup,
+  };
+};
 
 app.firestore = firestore;
 

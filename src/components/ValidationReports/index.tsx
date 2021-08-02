@@ -55,7 +55,6 @@ const ExpRow = ({ report, selectedSlug }: any) => {
             </IconButton>
           </DataCell>
         )}
-        
       </TableRow>
       <ExpandableRow colSpan={5} open={open}>
         <DetailsTable details={details} />
@@ -272,7 +271,7 @@ const ValidationReports = ({ reports, filter, selectedSlug }: any) => {
         {sortedData
           .filter((r: any) => (filter ? r.slug.indexOf(filter) > -1 : true))
           .map((report: any) => (
-            <ExpRow 
+            <ExpRow
               report={report}
               key={report.timestamp}
               selectedSlug={selectedSlug}
