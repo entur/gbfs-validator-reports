@@ -295,6 +295,14 @@
       "version": "2.2",
       "freefloating": false,
       "docked": true
+    },
+    {
+      "slug": "moveabout",
+      "stage": "original",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/moveabout/original/gbfs.json",
+      "version": "2.2",
+      "freefloating": false,
+      "docked": true
     }
   ]
 }
