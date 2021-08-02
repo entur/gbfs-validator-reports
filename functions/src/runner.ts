@@ -108,7 +108,7 @@ class Runner {
 
   alternativeAutoDiscovery(url: string) {
     return axios(url, {
-      headers: { 'ET-Client-Name': 'entur-gbfs_validator'}
+      headers: { 'ET-Client-Name': 'entur-gbfs_validator' },
     })
       .then(({ data }) => {
         if (typeof data !== 'object') {
@@ -147,7 +147,7 @@ class Runner {
 
   checkAutodiscovery() {
     return axios(this.url, {
-      headers: { 'ET-Client-Name': 'entur-gbfs_validator'}
+      headers: { 'ET-Client-Name': 'entur-gbfs_validator' },
     })
       .then(({ status, data }) => {
         if (typeof data !== 'object') {
@@ -186,7 +186,7 @@ class Runner {
     recommended: boolean,
   ): Promise<FileResult> {
     return axios(`${this.url}/${File[type]}.json`, {
-      headers: { 'ET-Client-Name': 'entur-gbfs_validator'}
+      headers: { 'ET-Client-Name': 'entur-gbfs_validator' },
     })
       .then(({ data }) => ({
         required,
