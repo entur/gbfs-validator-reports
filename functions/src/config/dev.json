@@ -303,6 +303,14 @@
       "version": "2.2",
       "freefloating": false,
       "docked": true
+    },
+    {
+      "slug": "tierasker",
+      "stage": "original",
+      "url": "https://api.staging.entur.io/mobility/v1/gbfs-v2_2/tierasker/original",
+      "version": "2.2",
+      "freefloating": true,
+      "docked": false
     }
   ]
 }
