@@ -31,13 +31,17 @@ type Feed = {
   docked: boolean;
 };
 
+const runtimeOpts = {
+  timeoutSeconds: 540
+}
+
 export default function (admin: any) {
   const config = getConfig();
   const feeds: Feed[] = config.feeds;
   const db: any = admin.firestore();
   const bucket = (admin.storage() as any).bucket();
 
-  return functions.pubsub.schedule('every 10 minutes').onRun(async (_) => {
+  return functions.pubsub._scheduleWithOptions('every 10 minutes', runtimeOpts).onRun(async (_) => {
     const runtimeErrors: Error[] = [];
     await Promise.all(
       feeds.map(async (feed) => {
