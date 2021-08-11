@@ -32,8 +32,8 @@ type Feed = {
 };
 
 const runtimeOpts = {
-  timeoutSeconds: 540
-}
+  timeoutSeconds: 540,
+};
 
 export default function (admin: any) {
   const config = getConfig();
@@ -41,62 +41,64 @@ export default function (admin: any) {
   const db: any = admin.firestore();
   const bucket = (admin.storage() as any).bucket();
 
-  return functions.pubsub._scheduleWithOptions('every 10 minutes', runtimeOpts).onRun(async (_) => {
-    const runtimeErrors: Error[] = [];
-    await Promise.all(
-      feeds.map(async (feed) => {
-        try {
-          const validator = new Runner(feed.url, {
-            freefloating: feed.freefloating,
-            docked: feed.docked,
-          });
+  return functions.pubsub
+    ._scheduleWithOptions('every 10 minutes', runtimeOpts)
+    .onRun(async (_) => {
+      const runtimeErrors: Error[] = [];
+      await Promise.all(
+        feeds.map(async (feed) => {
+          try {
+            const validator = new Runner(feed.url, {
+              freefloating: feed.freefloating,
+              docked: feed.docked,
+            });
 
-          const report = await validator.validation();
-          const timestamp = new Date().getTime();
-          const blob = bucket.file(
-            `reports/${feed.slug}_${feed.stage}/${feed.slug}_${feed.stage}_${timestamp}.json`,
-          );
-          const blobStream = blob.createWriteStream({
-            gzip: true,
-            resumable: false,
-          });
-          const publicUrl = await new Promise((resolve, reject) => {
-            blobStream
-              .on('finish', () => {
-                resolve(
-                  `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
-                );
-              })
-              .on('error', (error: any) => reject(error))
-              .end(JSON.stringify(report));
-          });
+            const report = await validator.validation();
+            const timestamp = new Date().getTime();
+            const blob = bucket.file(
+              `reports/${feed.slug}_${feed.stage}/${feed.slug}_${feed.stage}_${timestamp}.json`,
+            );
+            const blobStream = blob.createWriteStream({
+              gzip: true,
+              resumable: false,
+            });
+            const publicUrl = await new Promise((resolve, reject) => {
+              blobStream
+                .on('finish', () => {
+                  resolve(
+                    `https://storage.googleapis.com/${bucket.name}/${blob.name}`,
+                  );
+                })
+                .on('error', (error: any) => reject(error))
+                .end(JSON.stringify(report));
+            });
 
-          const provider = await db
-            .collection('providers')
-            .doc(`${feed.slug}_${feed.stage}`)
-            .get();
+            const provider = await db
+              .collection('providers')
+              .doc(`${feed.slug}_${feed.stage}`)
+              .get();
 
-          if (!provider || !provider.exists || !provider.slug) {
-            await provider.ref.set(feed, { merge: true });
+            if (!provider || !provider.exists || !provider.slug) {
+              await provider.ref.set(feed, { merge: true });
+            }
+
+            await provider.ref.collection('reports').add({
+              slug: feed.slug,
+              stage: feed.stage,
+              timestamp,
+              version: feed.version,
+              hasErrors: report.summary.hasErrors,
+              detailsUrl: publicUrl,
+            });
+          } catch (e) {
+            runtimeErrors.push(e);
           }
-
-          await provider.ref.collection('reports').add({
-            slug: feed.slug,
-            stage: feed.stage,
-            timestamp,
-            version: feed.version,
-            hasErrors: report.summary.hasErrors,
-            detailsUrl: publicUrl,
-          });
-        } catch (e) {
-          runtimeErrors.push(e);
-        }
-      }),
-    );
-    if (runtimeErrors.length > 0) {
-      console.log('Finished validation with errors', runtimeErrors);
-    }
-  });
+        }),
+      );
+      if (runtimeErrors.length > 0) {
+        console.log('Finished validation with errors', runtimeErrors);
+      }
+    });
 }
 
 export const manualTrigger = functions.https.onRequest(
