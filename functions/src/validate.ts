@@ -34,7 +34,7 @@ type Feed = {
 
 const runtimeOpts = {
   timeoutSeconds: 540,
-  memory: '1GB' as typeof VALID_MEMORY_OPTIONS[number]
+  memory: '1GB' as typeof VALID_MEMORY_OPTIONS[number],
 };
 
 export default function (admin: any) {
