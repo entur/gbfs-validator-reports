@@ -4,6 +4,7 @@ import * as devConfig from './config/dev.json';
 import * as stagingConfig from './config/staging.json';
 import * as productionConfig from './config/production.json';
 import { PubSub } from '@google-cloud/pubsub';
+import { VALID_MEMORY_OPTIONS } from 'firebase-functions';
 
 const configMapping: Record<string, any> = {
   'gbfs-validator-reports-dev': devConfig,
@@ -33,6 +34,7 @@ type Feed = {
 
 const runtimeOpts = {
   timeoutSeconds: 540,
+  memory: '1GB' as typeof VALID_MEMORY_OPTIONS[number]
 };
 
 export default function (admin: any) {

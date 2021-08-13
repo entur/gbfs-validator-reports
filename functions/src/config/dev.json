@@ -297,7 +297,7 @@
       "docked": true
     },
     {
-      "slug": "moveabout",
+      "slug": "moveaboutno",
       "stage": "original",
       "url": "https://staging.miveo.se/api/gbfs/moveabout_no/gbfs.json",
       "version": "2.2",
