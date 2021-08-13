@@ -299,7 +299,7 @@
     {
       "slug": "moveabout",
       "stage": "original",
-      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/moveabout/original",
+      "url": "https://staging.miveo.se/api/gbfs/moveabout_no/gbfs.json",
       "version": "2.2",
       "freefloating": false,
       "docked": true
