@@ -201,6 +201,14 @@
       "docked": false
     },
     {
+      "slug": "zvipptrondheim",
+      "stage": "original",
+      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/zvipptrondheim/original",
+      "version": "2.2",
+      "freefloating": true,
+      "docked": false
+    },
+    {
       "slug": "oslobysykkel",
       "stage": "original",
       "url": "https://gbfs.urbansharing.com/oslobysykkel.no",
