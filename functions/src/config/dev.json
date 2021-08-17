@@ -153,6 +153,46 @@
       "docked": false
     },
     {
+      "slug": "boltsarpsborg",
+      "stage": "original",
+      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltsarpsborg/original",
+      "version": "2.2",
+      "freefloating": true,
+      "docked": false
+    },
+    {
+      "slug": "boltdrammen",
+      "stage": "original",
+      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltdrammen/original",
+      "version": "2.2",
+      "freefloating": true,
+      "docked": false
+    },
+    {
+      "slug": "boltgjovik",
+      "stage": "original",
+      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltgjovik/original",
+      "version": "2.2",
+      "freefloating": true,
+      "docked": false
+    },
+    {
+      "slug": "bolthamar",
+      "stage": "original",
+      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/bolthamar/original",
+      "version": "2.2",
+      "freefloating": true,
+      "docked": false
+    },
+    {
+      "slug": "boltlillehammer",
+      "stage": "original",
+      "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/boltlillehammer/original",
+      "version": "2.2",
+      "freefloating": true,
+      "docked": false
+    },
+    {
       "slug": "limeoslo",
       "stage": "original",
       "url": "https://api.dev.entur.io/mobility/v1/gbfs-v2_2/limeoslo/original",
@@ -228,46 +268,6 @@
       "slug": "boltbergen",
       "stage": "entur",
       "url": "https://api.dev.entur.io/mobility/v2/gbfs/boltbergen",
-      "version": "2.2",
-      "freefloating": true,
-      "docked": false
-    },
-    {
-      "slug": "boltsarpsborg",
-      "stage": "entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/boltsarpsborg",
-      "version": "2.2",
-      "freefloating": true,
-      "docked": false
-    },
-    {
-      "slug": "boltdrammen",
-      "stage": "entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/boltdrammen",
-      "version": "2.2",
-      "freefloating": true,
-      "docked": false
-    },
-    {
-      "slug": "boltgjovik",
-      "stage": "entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/boltgjovik",
-      "version": "2.2",
-      "freefloating": true,
-      "docked": false
-    },
-    {
-      "slug": "bolthamar",
-      "stage": "entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/bolthamar",
-      "version": "2.2",
-      "freefloating": true,
-      "docked": false
-    },
-    {
-      "slug": "boltlillehammer",
-      "stage": "entur",
-      "url": "https://api.dev.entur.io/mobility/v2/gbfs/boltlillehammer",
       "version": "2.2",
       "freefloating": true,
       "docked": false
