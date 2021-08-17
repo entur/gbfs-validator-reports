@@ -233,6 +233,46 @@
       "docked": false
     },
     {
+      "slug": "boltsarpsborg",
+      "stage": "entur",
+      "url": "https://api.dev.entur.io/mobility/v2/gbfs/boltsarpsborg",
+      "version": "2.2",
+      "freefloating": true,
+      "docked": false
+    },
+    {
+      "slug": "boltdrammen",
+      "stage": "entur",
+      "url": "https://api.dev.entur.io/mobility/v2/gbfs/boltdrammen",
+      "version": "2.2",
+      "freefloating": true,
+      "docked": false
+    },
+    {
+      "slug": "boltgjovik",
+      "stage": "entur",
+      "url": "https://api.dev.entur.io/mobility/v2/gbfs/boltgjovik",
+      "version": "2.2",
+      "freefloating": true,
+      "docked": false
+    },
+    {
+      "slug": "bolthamar",
+      "stage": "entur",
+      "url": "https://api.dev.entur.io/mobility/v2/gbfs/bolthamar",
+      "version": "2.2",
+      "freefloating": true,
+      "docked": false
+    },
+    {
+      "slug": "boltlillehammer",
+      "stage": "entur",
+      "url": "https://api.dev.entur.io/mobility/v2/gbfs/boltlillehammer",
+      "version": "2.2",
+      "freefloating": true,
+      "docked": false
+    },
+    {
       "slug": "limeoslo",
       "stage": "entur",
       "url": "https://api.dev.entur.io/mobility/v2/gbfs/limeoslo",
