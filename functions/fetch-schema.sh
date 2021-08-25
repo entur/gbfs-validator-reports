@@ -15,7 +15,8 @@ validate () {
 validate "SCHEMA_VERSION" ${SCHEMA_VERSION}
 validate "DESTINATION_PATH" ${DESTINATION_PATH}
 
-GITHUB_URL="https://github.com/MobilityData/gbfs-json-schema/archive/$SCHEMA_VERSION.zip"
+#GITHUB_URL="https://github.com/MobilityData/gbfs-json-schema/archive/$SCHEMA_VERSION.zip"
+GITHUB_URL="https://github.com/testower/gbfs-json-schema/archive/refs/heads/multipolygon_typo.zip"
 ZIP_FILE=downloaded.zip
 
 echo "GBFS JSON schema repo github URL: $GITHUB_URL"
