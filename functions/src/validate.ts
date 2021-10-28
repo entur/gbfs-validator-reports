@@ -11,39 +11,43 @@ type BasicAuth = {
   basicAuth: {
     user: string;
     password: string;
-  }
-}
+  };
+};
 
 type BearerTokenAuth = {
-  type: 'bearer_token',
+  type: 'bearer_token';
   bearerToken: {
     token: string;
-  }
-}
+  };
+};
 
 type OauthClientCredentialsGrantAuth = {
-  type: 'oauth_client_credentials_grant',
+  type: 'oauth_client_credentials_grant';
   oauthClientCredentialsGrant: {
     user: string;
     password: string;
     tokenUrl: string;
   };
-}
+};
 
 type BoltAuth = {
-  type: 'bolt',
+  type: 'bolt';
   bolt: {
     url: string;
     user_name: string;
     user_pass: string;
   };
-}
+};
 
-type Auth = BasicAuth | BearerTokenAuth | OauthClientCredentialsGrantAuth | BoltAuth;
+type Auth =
+  | BasicAuth
+  | BearerTokenAuth
+  | OauthClientCredentialsGrantAuth
+  | BoltAuth;
 
 type BoltAccessTokenResponse = {
   access_token: string;
-}
+};
 
 type Feed = {
   slug: string;
@@ -60,10 +64,8 @@ const runtimeOpts = {
 
 // https://matthiashager.com/converting-snake-case-to-camel-case-object-keys-with-javascript
 const toCamel = (s: any) => {
-  return s.replace(/([-_][a-z])/ig, ($1: any) => {
-    return $1.toUpperCase()
-      .replace('-', '')
-      .replace('_', '');
+  return s.replace(/([-_][a-z])/gi, ($1: any) => {
+    return $1.toUpperCase().replace('-', '').replace('_', '');
   });
 };
 
@@ -79,10 +81,9 @@ const keysToCamel = function (o: any) {
   if (isObject(o)) {
     const n: any = {};
 
-    Object.keys(o)
-      .forEach((k) => {
-        n[toCamel(k)] = keysToCamel(o[k]);
-      });
+    Object.keys(o).forEach((k) => {
+      n[toCamel(k)] = keysToCamel(o[k]);
+    });
 
     return n;
   } else if (isArray(o)) {
@@ -106,23 +107,23 @@ export default function (admin: any) {
       await Promise.all(
         Object.values(feeds).map(async (feed) => {
           try {
-
             let auth: Auth | undefined = undefined;
 
             if (feed.auth?.type === 'bolt') {
               const accessTokenResponse: BoltAccessTokenResponse = await got
                 .post(feed.auth.bolt.url, {
                   json: {
-                    'user_name': feed.auth.bolt.user_name,
-                    'user_pass': feed.auth.bolt.user_pass
-                  }
-                }).json()
+                    user_name: feed.auth.bolt.user_name,
+                    user_pass: feed.auth.bolt.user_pass,
+                  },
+                })
+                .json();
 
               auth = {
                 type: 'bearer_token',
                 bearerToken: {
-                  token: accessTokenResponse.access_token
-                }
+                  token: accessTokenResponse.access_token,
+                },
               };
 
               delete feed.auth;
