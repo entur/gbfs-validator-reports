@@ -29,7 +29,6 @@ const Home = () => {
       if (slug) {
         const snapshot = await db
           .collectionGroup('reports')
-          .where('stage', '==', 'original')
           .where('slug', '==', slug)
           .where('timestamp', '>', timestamp)
           .orderBy('timestamp', 'desc')
@@ -37,15 +36,11 @@ const Home = () => {
           .get();
         setReports(snapshot.docs.map((docSnapshot) => docSnapshot.data()));
       } else {
-        const providers = await db
-          .collection('providers')
-          .where('stage', '==', 'original')
-          .get();
+        const providers = await db.collection('providers').get();
 
         if (providers.size > 0) {
           const snapshot = await db
             .collectionGroup('reports')
-            .where('stage', '==', 'original')
             .where('timestamp', '>', timestamp)
             .orderBy('timestamp', 'desc')
             .limit(providers.size)
@@ -87,7 +82,7 @@ const Home = () => {
 
       {reports && (
         <ValidationReports
-          reports={reports.filter((report: any) => report.stage === 'original')}
+          reports={reports}
           filter={filterSearch}
           selectedSlug={slug}
         />

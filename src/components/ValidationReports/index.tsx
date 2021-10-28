@@ -11,7 +11,7 @@ import {
   useSortableData,
 } from '@entur/table';
 import { IconButton, SecondarySquareButton } from '@entur/button';
-import { ValidationInfoIcon, WarningIcon } from '@entur/icons';
+import { ValidationInfoIcon } from '@entur/icons';
 import { Modal } from '@entur/modal';
 import { ListItem, PreformattedText, UnorderedList } from '@entur/typography';
 import { Pagination } from '@entur/menu';
@@ -43,7 +43,8 @@ const ExpRow = ({ report, selectedSlug }: any) => {
           <ExpandRowButton onClick={() => setopen(!open)} open={open} />
         </DataCell>
         <DataCell>{report.slug}</DataCell>
-        <DataCell>{report.version}</DataCell>
+        <DataCell>{report.version.detected}</DataCell>
+        <DataCell>{report.version.validated}</DataCell>
         <DataCell>{new Date(report.timestamp).toLocaleString()}</DataCell>
         <DataCell status={report.hasErrors ? 'negative' : 'positive'}>
           {report.hasErrors ? 'Invalid' : 'Valid'}
@@ -197,25 +198,15 @@ const DetailsTable = ({ details }: any) => {
                 status={
                   !file.exists
                     ? 'neutral'
-                    : file.errors
+                    : file.hasErrors
                     ? 'negative'
                     : 'positive'
                 }
               >
-                {!file.exists ? 'N/A' : file.errors ? 'Invalid' : 'Valid'}
+                {!file.exists ? 'N/A' : file.hasErrors ? 'Invalid' : 'Valid'}
               </DataCell>
               <DataCell style={{ display: 'flex' }}>
-                {!file.exists && file?.errors?.message && (
-                  <Tooltip
-                    placement="top"
-                    content={`Could not validate: ${file.errors.message}`}
-                  >
-                    <SecondarySquareButton>
-                      <WarningIcon />
-                    </SecondarySquareButton>
-                  </Tooltip>
-                )}
-                {file.exists && file.errors && (
+                {file.exists && file.hasErrors && (
                   <Tooltip placement="top" content="See detailed error report">
                     <SecondarySquareButton
                       onClick={() => {
@@ -260,7 +251,8 @@ const ValidationReports = ({ reports, filter, selectedSlug }: any) => {
           <HeaderCell {...getSortableHeaderProps({ name: 'provider' })}>
             System
           </HeaderCell>
-          <HeaderCell>Version</HeaderCell>
+          <HeaderCell>Detected version</HeaderCell>
+          <HeaderCell>Validated version</HeaderCell>
           <HeaderCell>Report time</HeaderCell>
           <HeaderCell {...getSortableHeaderProps({ name: 'hasErrors' })}>
             Valid

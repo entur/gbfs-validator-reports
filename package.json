@@ -6,6 +6,7 @@
     "@auth0/auth0-react": "1.4.0",
     "@entur/button": "2.5.1",
     "@entur/form": "4.4.0",
+    "@entur/gbfs-validator": "^0.1.0",
     "@entur/icons": "1.20.0",
     "@entur/layout": "1.10.2",
     "@entur/menu": "3.6.0",

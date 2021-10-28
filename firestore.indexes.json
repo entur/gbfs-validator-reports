@@ -4,7 +4,6 @@
       "collectionGroup": "reports",
       "queryScope": "COLLECTION_GROUP",
       "fields": [
-        { "fieldPath": "stage", "order": "ASCENDING" },
         { "fieldPath": "timestamp", "order": "DESCENDING" }
       ]
     },
@@ -13,7 +12,6 @@
       "queryScope": "COLLECTION_GROUP",
       "fields": [
         { "fieldPath": "slug", "order": "ASCENDING" },
-        { "fieldPath": "stage", "order": "ASCENDING" },
         { "fieldPath": "timestamp", "order": "DESCENDING" }
       ]
     }
