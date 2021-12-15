@@ -15,7 +15,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@entur/gbfs-validator": "0.1.0",
+    "@entur/gbfs-validator": "0.2.0",
     "@google-cloud/pubsub": "2.18.1",
     "ajv": "8.1.0",
     "ajv-formats": "2.0.2",
