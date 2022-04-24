@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@auth0/auth0-react": "1.4.0",
+    "@auth0/auth0-react": "1.10.0",
     "@entur/button": "2.5.1",
     "@entur/form": "4.4.0",
     "@entur/gbfs-validator": "0.1.0",
