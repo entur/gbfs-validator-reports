@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { Heading1, Paragraph, SubParagraph } from '@entur/typography';
 import ValidationReports from '../../components/ValidationReports';
 
-import firebase from 'firebase/app';
 import { TextField } from '@entur/form';
 import { SearchIcon } from '@entur/icons';
 import { IconButton } from '@entur/button';
 import { BackArrowIcon } from '@entur/icons';
 import { Link } from '@entur/typography';
 import { useHistory, useParams } from 'react-router-dom';
+import { getApiBaseUrl } from '../../config';
 
 type PathParams = {
   slug: string;
@@ -23,31 +23,24 @@ const Home = () => {
 
   useEffect(() => {
     const fetchReports = async () => {
-      const timestamp = new Date().getTime() - 1000 * 60 * 60 * 24; // last 24 hours
-      const db = firebase.firestore();
-
+      const response = await fetch(`${getApiBaseUrl()}validation/systems${slug ? '/' + slug : ''}`);
+      let reports = await response.json();
       if (slug) {
-        const snapshot = await db
-          .collectionGroup('reports')
-          .where('slug', '==', slug)
-          .where('timestamp', '>', timestamp)
-          .orderBy('timestamp', 'desc')
-          .limit(25)
-          .get();
-        setReports(snapshot.docs.map((docSnapshot) => docSnapshot.data()));
-      } else {
-        const providers = await db.collection('providers').get();
-
-        if (providers.size > 0) {
-          const snapshot = await db
-            .collectionGroup('reports')
-            .where('timestamp', '>', timestamp)
-            .orderBy('timestamp', 'desc')
-            .limit(providers.size)
-            .get();
-          setReports(snapshot.docs.map((docSnapshot) => docSnapshot.data()));
-        }
+        reports = {
+          [slug]: reports
+        };
       }
+
+      setReports(Object.keys(reports).map(key => {
+        return {
+          slug: key,
+          detailsUrl: `${getApiBaseUrl()}validation/systems/${key}`,
+          hasErrors: reports[key].summary.errorsCount > 0,
+          version: reports[key].summary.version,
+          timestamp: reports[key].summary.timestamp,
+          ...reports[key]
+        }
+      }));
     };
     fetchReports();
   }, [slug]);

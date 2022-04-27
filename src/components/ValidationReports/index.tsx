@@ -10,14 +10,36 @@ import {
   TableRow,
   useSortableData,
 } from '@entur/table';
-import { IconButton, SecondarySquareButton } from '@entur/button';
-import { ValidationInfoIcon } from '@entur/icons';
+import { ButtonGroup, IconButton, SecondaryButton, SecondarySquareButton } from '@entur/button';
+import { DownloadIcon, ValidationInfoIcon } from '@entur/icons';
 import { Modal } from '@entur/modal';
-import { ListItem, PreformattedText, UnorderedList } from '@entur/typography';
+import { PreformattedText } from '@entur/typography';
 import { Pagination } from '@entur/menu';
 import { Tooltip } from '@entur/tooltip';
 import { StatsIcon } from '@entur/icons';
 import { useHistory } from 'react-router-dom';
+
+const downloadFile = (data: string, fileName: string, fileType: string) => {
+  const blob = new Blob([data], { type: fileType });
+  const a = document.createElement('a');
+  a.download = fileName;
+  a.href = window.URL.createObjectURL(blob);
+  const clickEvt = new MouseEvent('click', {
+    view: window,
+    bubbles: true,
+    cancelable: true,
+  });
+  a.dispatchEvent(clickEvt);
+  a.remove();
+}
+
+const exportToJson = (data: any, fileName: string) => {
+  downloadFile(
+    JSON.stringify(data),
+    fileName,
+    'text/json',
+  );
+}
 
 const ExpRow = ({ report, selectedSlug }: any) => {
   const history = useHistory();
@@ -43,11 +65,10 @@ const ExpRow = ({ report, selectedSlug }: any) => {
           <ExpandRowButton onClick={() => setopen(!open)} open={open} />
         </DataCell>
         <DataCell>{report.slug}</DataCell>
-        <DataCell>{report.version.detected}</DataCell>
-        <DataCell>{report.version.validated}</DataCell>
-        <DataCell>{new Date(report.timestamp).toLocaleString()}</DataCell>
-        <DataCell status={report.hasErrors ? 'negative' : 'positive'}>
-          {report.hasErrors ? 'Invalid' : 'Valid'}
+        <DataCell>{report.summary.version}</DataCell>
+        <DataCell>{new Date(report.summary.timestamp).toLocaleString()}</DataCell>
+        <DataCell status={report.summary.errorsCount > 0 ? 'negative' : 'positive'}>
+          {report.summary.errorsCount > 0 ? 'Invalid' : 'Valid'}
         </DataCell>
         {!selectedSlug && (
           <DataCell>
@@ -82,7 +103,7 @@ const FileReportErrorsTable = ({ file }: any) => {
       <Table spacing="small">
         <TableHead>
           <TableRow>
-            <HeaderCell>instancePath</HeaderCell>
+            <HeaderCell>violationPath</HeaderCell>
             <HeaderCell>schemaPath</HeaderCell>
             <HeaderCell>params</HeaderCell>
             <HeaderCell>message</HeaderCell>
@@ -100,8 +121,8 @@ const FileReportErrorsTable = ({ file }: any) => {
                 <DataCell
                   style={{ maxWidth: '16rem', overflowWrap: 'break-word' }}
                 >
-                  {error.instancePath && (
-                    <PreformattedText>{error.instancePath}</PreformattedText>
+                  {error.violationPath && (
+                    <PreformattedText>{error.violationPath}</PreformattedText>
                   )}
                 </DataCell>
                 <DataCell
@@ -110,15 +131,6 @@ const FileReportErrorsTable = ({ file }: any) => {
                   {error.schemaPath && (
                     <PreformattedText>{error.schemaPath}</PreformattedText>
                   )}
-                </DataCell>
-                <DataCell>
-                  <UnorderedList>
-                    {Object.entries(error.params).map((entry: any) => (
-                      <ListItem title={entry[0]} key={entry[0]}>
-                        {entry[1]}
-                      </ListItem>
-                    ))}
-                  </UnorderedList>
                 </DataCell>
                 <DataCell>{error.message}</DataCell>
               </TableRow>
@@ -133,6 +145,10 @@ const FileReportErrors = ({ file }: any) => {
   return (
     <div className="result">
       <h3>{file.file}</h3>
+      <ButtonGroup>
+        <SecondaryButton onClick={() => exportToJson(file.schema, `${file.file}.json`)}><DownloadIcon /> Download schema</SecondaryButton>
+        <SecondaryButton onClick={() => exportToJson(file.fileContents, `${file.file}-schema.json`)}><DownloadIcon /> Download source file</SecondaryButton>
+      </ButtonGroup>
       {file.languages ? (
         file.languages.map((lang: any, i: number) => {
           if (file.required && !lang.exists) {
@@ -180,12 +196,12 @@ const DetailsTable = ({ details }: any) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {details.files.map((file: any) => (
+          {Object.values(details.files).map((file: any) => (
             <TableRow key={file.file}>
               <DataCell style={{ paddingLeft: '4.5rem' }}>{file.file}</DataCell>
               <DataCell
                 status={
-                  !file.exists && (file.required || file.recommended)
+                  !file.exists && file.required
                     ? 'negative'
                     : !file.exists
                     ? 'neutral'
@@ -198,15 +214,15 @@ const DetailsTable = ({ details }: any) => {
                 status={
                   !file.exists
                     ? 'neutral'
-                    : file.hasErrors
+                    : file.errorsCount > 0
                     ? 'negative'
                     : 'positive'
                 }
               >
-                {!file.exists ? 'N/A' : file.hasErrors ? 'Invalid' : 'Valid'}
+                {!file.exists ? 'N/A' : file.errorsCount > 0 ? 'Invalid' : 'Valid'}
               </DataCell>
               <DataCell style={{ display: 'flex' }}>
-                {file.exists && file.hasErrors && (
+                {file.exists && file.errorsCount > 0 && (
                   <Tooltip placement="top" content="See detailed error report">
                     <SecondarySquareButton
                       onClick={() => {
@@ -241,19 +257,18 @@ const ValidationReports = ({ reports, filter, selectedSlug }: any) => {
     sortedData,
     getSortableHeaderProps,
     getSortableTableProps,
-  } = useSortableData<{ provider: string; hasErrors: boolean }>(reports);
+  } = useSortableData<{ slug: string; hasErrors: boolean, version: string, timestamp: number }>(reports);
 
   return (
     <Table {...getSortableTableProps}>
       <TableHead>
         <TableRow>
           <HeaderCell padding="radio">{''}</HeaderCell>
-          <HeaderCell {...getSortableHeaderProps({ name: 'provider' })}>
+          <HeaderCell {...getSortableHeaderProps({ name: 'slug' })}>
             System
           </HeaderCell>
-          <HeaderCell>Detected version</HeaderCell>
-          <HeaderCell>Validated version</HeaderCell>
-          <HeaderCell>Report time</HeaderCell>
+          <HeaderCell {...getSortableHeaderProps({ name: 'version' })}>Version</HeaderCell>
+          <HeaderCell {...getSortableHeaderProps({ name: 'timestamp' })}>Report time</HeaderCell>
           <HeaderCell {...getSortableHeaderProps({ name: 'hasErrors' })}>
             Valid
           </HeaderCell>
@@ -265,7 +280,7 @@ const ValidationReports = ({ reports, filter, selectedSlug }: any) => {
           .map((report: any) => (
             <ExpRow
               report={report}
-              key={report.timestamp}
+              key={`${report.slug}_${report.timestamp}`}
               selectedSlug={selectedSlug}
             />
           ))}
