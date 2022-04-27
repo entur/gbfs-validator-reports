@@ -13,7 +13,7 @@
     "@entur/table": "4.3.7",
     "@entur/tokens": "3.0.1",
     "@entur/tooltip": "2.4.16",
-    "@entur/typography": "1.6.5",
+    "@entur/typography": "1.6.12",
     "husky": "6.0.0",
     "lint-staged": "10.5.4",
     "react": "17.0.2",
