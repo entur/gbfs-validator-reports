@@ -50,10 +50,10 @@ const Home = () => {
       <Heading1>GBFS Validation reports</Heading1>
       <SubParagraph>
         <Link
-          href="https://enturas.atlassian.net/wiki/spaces/PUBLIC/pages/1883439205/Mobility+Data+Collection+-+GBFS+v2.2"
+          href="https://enturas.atlassian.net/wiki/spaces/PUBLIC/pages/1883439205/Mobility+Data+Collection+-+GBFS+v2.2-v2.3"
           target="_NEW"
         >
-          Mobility Data Collection - GBFS v2.2 @ ENtur
+          Mobility Data Collection - GBFS v2.2-v2.3 @ ENtur
         </Link>
       </SubParagraph>
       {!slug && (
