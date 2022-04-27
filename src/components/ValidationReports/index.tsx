@@ -10,14 +10,48 @@ import {
   TableRow,
   useSortableData,
 } from '@entur/table';
-import { ButtonGroup, IconButton, SecondaryButton, SecondarySquareButton } from '@entur/button';
-import { DownloadIcon, ValidationInfoIcon } from '@entur/icons';
+import {
+  ButtonGroup,
+  IconButton,
+  SecondaryButton,
+  SecondarySquareButton,
+} from '@entur/button';
+import { DownloadIcon, ValidationInfoIcon, StatsIcon } from '@entur/icons';
 import { Modal } from '@entur/modal';
 import { PreformattedText } from '@entur/typography';
 import { Pagination } from '@entur/menu';
 import { Tooltip } from '@entur/tooltip';
-import { StatsIcon } from '@entur/icons';
 import { useHistory } from 'react-router-dom';
+
+const getFilePresenceStatus = (file: any) => {
+  if (!file.exists && file.required) {
+    return 'negative';
+  } else if (!file.exists) {
+    return 'neutral';
+  } else {
+    return 'positive';
+  }
+};
+
+const getFileValidationText = (file: any) => {
+  if (!file.exists) {
+    return 'N/A';
+  } else if (file.errorsCount > 0) {
+    return 'Invalid';
+  } else {
+    return 'Valid';
+  }
+};
+
+const getFileValidationStatus = (file: any) => {
+  if (!file.exists) {
+    return 'neutral';
+  } else if (file.errorsCount > 0) {
+    return 'negative';
+  } else {
+    return 'positive';
+  }
+};
 
 const downloadFile = (data: string, fileName: string, fileType: string) => {
   const blob = new Blob([data], { type: fileType });
@@ -31,15 +65,11 @@ const downloadFile = (data: string, fileName: string, fileType: string) => {
   });
   a.dispatchEvent(clickEvt);
   a.remove();
-}
+};
 
 const exportToJson = (data: any, fileName: string) => {
-  downloadFile(
-    JSON.stringify(data),
-    fileName,
-    'text/json',
-  );
-}
+  downloadFile(JSON.stringify(data), fileName, 'text/json');
+};
 
 const ExpRow = ({ report, selectedSlug }: any) => {
   const history = useHistory();
@@ -66,8 +96,12 @@ const ExpRow = ({ report, selectedSlug }: any) => {
         </DataCell>
         <DataCell>{report.slug}</DataCell>
         <DataCell>{report.summary.version}</DataCell>
-        <DataCell>{new Date(report.summary.timestamp).toLocaleString()}</DataCell>
-        <DataCell status={report.summary.errorsCount > 0 ? 'negative' : 'positive'}>
+        <DataCell>
+          {new Date(report.summary.timestamp).toLocaleString()}
+        </DataCell>
+        <DataCell
+          status={report.summary.errorsCount > 0 ? 'negative' : 'positive'}
+        >
           {report.summary.errorsCount > 0 ? 'Invalid' : 'Valid'}
         </DataCell>
         {!selectedSlug && (
@@ -112,7 +146,7 @@ const FileReportErrorsTable = ({ file }: any) => {
         <TableBody>
           {file.errors
             .filter(
-              (item: any, index: number) =>
+              (_: any, index: number) =>
                 index + 1 >= (currentPage - 1) * resultsPerPage + 1 &&
                 index + 1 <= currentPage * resultsPerPage,
             )
@@ -146,8 +180,18 @@ const FileReportErrors = ({ file }: any) => {
     <div className="result">
       <h3>{file.file}</h3>
       <ButtonGroup>
-        <SecondaryButton onClick={() => exportToJson(file.schema, `${file.file}.json`)}><DownloadIcon /> Download schema</SecondaryButton>
-        <SecondaryButton onClick={() => exportToJson(file.fileContents, `${file.file}-schema.json`)}><DownloadIcon /> Download source file</SecondaryButton>
+        <SecondaryButton
+          onClick={() => exportToJson(file.schema, `${file.file}.json`)}
+        >
+          <DownloadIcon /> Download schema
+        </SecondaryButton>
+        <SecondaryButton
+          onClick={() =>
+            exportToJson(file.fileContents, `${file.file}-schema.json`)
+          }
+        >
+          <DownloadIcon /> Download source file
+        </SecondaryButton>
       </ButtonGroup>
       {file.languages ? (
         file.languages.map((lang: any, i: number) => {
@@ -199,27 +243,11 @@ const DetailsTable = ({ details }: any) => {
           {Object.values(details.files).map((file: any) => (
             <TableRow key={file.file}>
               <DataCell style={{ paddingLeft: '4.5rem' }}>{file.file}</DataCell>
-              <DataCell
-                status={
-                  !file.exists && file.required
-                    ? 'negative'
-                    : !file.exists
-                    ? 'neutral'
-                    : 'positive'
-                }
-              >
+              <DataCell status={getFilePresenceStatus(file)}>
                 {file.exists ? 'Exists' : 'Missing'}
               </DataCell>
-              <DataCell
-                status={
-                  !file.exists
-                    ? 'neutral'
-                    : file.errorsCount > 0
-                    ? 'negative'
-                    : 'positive'
-                }
-              >
-                {!file.exists ? 'N/A' : file.errorsCount > 0 ? 'Invalid' : 'Valid'}
+              <DataCell status={getFileValidationStatus(file)}>
+                {getFileValidationText(file)}
               </DataCell>
               <DataCell style={{ display: 'flex' }}>
                 {file.exists && file.errorsCount > 0 && (
@@ -257,7 +285,12 @@ const ValidationReports = ({ reports, filter, selectedSlug }: any) => {
     sortedData,
     getSortableHeaderProps,
     getSortableTableProps,
-  } = useSortableData<{ slug: string; hasErrors: boolean, version: string, timestamp: number }>(reports);
+  } = useSortableData<{
+    slug: string;
+    hasErrors: boolean;
+    version: string;
+    timestamp: number;
+  }>(reports);
 
   return (
     <Table {...getSortableTableProps}>
@@ -267,8 +300,12 @@ const ValidationReports = ({ reports, filter, selectedSlug }: any) => {
           <HeaderCell {...getSortableHeaderProps({ name: 'slug' })}>
             System
           </HeaderCell>
-          <HeaderCell {...getSortableHeaderProps({ name: 'version' })}>Version</HeaderCell>
-          <HeaderCell {...getSortableHeaderProps({ name: 'timestamp' })}>Report time</HeaderCell>
+          <HeaderCell {...getSortableHeaderProps({ name: 'version' })}>
+            Version
+          </HeaderCell>
+          <HeaderCell {...getSortableHeaderProps({ name: 'timestamp' })}>
+            Report time
+          </HeaderCell>
           <HeaderCell {...getSortableHeaderProps({ name: 'hasErrors' })}>
             Valid
           </HeaderCell>

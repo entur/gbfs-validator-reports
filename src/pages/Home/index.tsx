@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import { Heading1, Paragraph, SubParagraph } from '@entur/typography';
+import { Heading1, Paragraph, SubParagraph, Link } from '@entur/typography';
 import ValidationReports from '../../components/ValidationReports';
 
 import { TextField } from '@entur/form';
-import { SearchIcon } from '@entur/icons';
+import { SearchIcon, BackArrowIcon } from '@entur/icons';
 import { IconButton } from '@entur/button';
-import { BackArrowIcon } from '@entur/icons';
-import { Link } from '@entur/typography';
 import { useHistory, useParams } from 'react-router-dom';
 import { getApiBaseUrl } from '../../config';
 
@@ -23,24 +21,28 @@ const Home = () => {
 
   useEffect(() => {
     const fetchReports = async () => {
-      const response = await fetch(`${getApiBaseUrl()}validation/systems${slug ? '/' + slug : ''}`);
-      let reports = await response.json();
+      const response = await fetch(
+        `${getApiBaseUrl()}validation/systems${slug ? '/' + slug : ''}`,
+      );
+      let fetchedReports = await response.json();
       if (slug) {
-        reports = {
-          [slug]: reports
+        fetchedReports = {
+          [slug]: fetchedReports,
         };
       }
 
-      setReports(Object.keys(reports).map(key => {
-        return {
-          slug: key,
-          detailsUrl: `${getApiBaseUrl()}validation/systems/${key}`,
-          hasErrors: reports[key].summary.errorsCount > 0,
-          version: reports[key].summary.version,
-          timestamp: reports[key].summary.timestamp,
-          ...reports[key]
-        }
-      }));
+      setReports(
+        Object.keys(fetchedReports).map((key) => {
+          return {
+            slug: key,
+            detailsUrl: `${getApiBaseUrl()}validation/systems/${key}`,
+            hasErrors: fetchedReports[key].summary.errorsCount > 0,
+            version: fetchedReports[key].summary.version,
+            timestamp: fetchedReports[key].summary.timestamp,
+            ...fetchedReports[key],
+          };
+        }),
+      );
     };
     fetchReports();
   }, [slug]);

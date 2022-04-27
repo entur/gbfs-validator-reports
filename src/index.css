@@ -10,7 +10,6 @@
 @import '~@entur/tooltip/dist/styles.css';
 @import '~@entur/modal/dist/styles.css';
 @import '~@entur/a11y/dist/styles.css';
-@import '~@entur/tooltip/dist/styles.css';
 
 body {
   margin: 0;
