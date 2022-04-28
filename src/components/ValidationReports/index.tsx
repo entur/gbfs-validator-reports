@@ -181,13 +181,13 @@ const FileReportErrors = ({ file }: any) => {
       <h3>{file.file}</h3>
       <ButtonGroup>
         <SecondaryButton
-          onClick={() => exportToJson(file.schema, `${file.file}.json`)}
+          onClick={() => exportToJson(file.schema, `${file.file}-schema.json`)}
         >
           <DownloadIcon /> Download schema
         </SecondaryButton>
         <SecondaryButton
           onClick={() =>
-            exportToJson(file.fileContents, `${file.file}-schema.json`)
+            exportToJson(file.fileContents, `${file.file}.json`)
           }
         >
           <DownloadIcon /> Download source file
