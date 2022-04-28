@@ -235,6 +235,7 @@ const DetailsTable = ({ details }: any) => {
           <TableRow>
             <HeaderCell style={{ paddingLeft: '4.5rem' }}>File</HeaderCell>
             <HeaderCell>Exists</HeaderCell>
+            <HeaderCell>Version</HeaderCell>
             <HeaderCell>Valid</HeaderCell>
             <HeaderCell>{}</HeaderCell>
           </TableRow>
@@ -245,6 +246,9 @@ const DetailsTable = ({ details }: any) => {
               <DataCell style={{ paddingLeft: '4.5rem' }}>{file.file}</DataCell>
               <DataCell status={getFilePresenceStatus(file)}>
                 {file.exists ? 'Exists' : 'Missing'}
+              </DataCell>
+              <DataCell>
+                {file.exists ? file.version : 'N/A'}
               </DataCell>
               <DataCell status={getFileValidationStatus(file)}>
                 {getFileValidationText(file)}
