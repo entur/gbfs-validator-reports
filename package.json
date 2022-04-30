@@ -49,7 +49,7 @@
     "@types/react": "16.14.25",
     "@types/react-dom": "16.9.15",
     "@types/react-router-dom": "5.3.3",
-    "firebase-tools": "9.10.0",
+    "firebase-tools": "9.23.3",
     "prettier": "2.2.1",
     "typescript": "4.2.4"
   },
