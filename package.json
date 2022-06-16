@@ -50,7 +50,7 @@
     "@types/react-dom": "18.0.5",
     "@types/react-router-dom": "5.3.3",
     "firebase-tools": "9.23.3",
-    "prettier": "2.7.0",
+    "prettier": "2.7.1",
     "typescript": "4.7.3"
   },
   "proxy": "http://localhost:8080",
