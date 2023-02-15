@@ -47,7 +47,7 @@
     "@testing-library/react": "11.2.7",
     "@types/jest": "26.0.24",
     "@types/react": "18.0.28",
-    "@types/react-dom": "18.0.10",
+    "@types/react-dom": "18.0.11",
     "@types/react-router-dom": "5.3.3",
     "firebase-tools": "9.23.3",
     "prettier": "2.8.4",
