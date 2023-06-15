@@ -186,9 +186,7 @@ const FileReportErrors = ({ file }: any) => {
           <DownloadIcon /> Download schema
         </SecondaryButton>
         <SecondaryButton
-          onClick={() =>
-            exportToJson(file.fileContents, `${file.file}.json`)
-          }
+          onClick={() => exportToJson(file.fileContents, `${file.file}.json`)}
         >
           <DownloadIcon /> Download source file
         </SecondaryButton>
@@ -247,9 +245,7 @@ const DetailsTable = ({ details }: any) => {
               <DataCell status={getFilePresenceStatus(file)}>
                 {file.exists ? 'Exists' : 'Missing'}
               </DataCell>
-              <DataCell>
-                {file.exists ? file.version : 'N/A'}
-              </DataCell>
+              <DataCell>{file.exists ? file.version : 'N/A'}</DataCell>
               <DataCell status={getFileValidationStatus(file)}>
                 {getFileValidationText(file)}
               </DataCell>

@@ -21,28 +21,40 @@ const Home = () => {
 
   useEffect(() => {
     const fetchReports = async () => {
-      const response = await fetch(
-        `${getApiBaseUrl()}validation/systems${slug ? '/' + slug : ''}`,
-      );
+      console.log({ slug });
+      const url = `${getApiBaseUrl()}validation/systems${
+        slug ? '/' + slug : ''
+      }`;
+      console.log({ url });
+      const response = await fetch(url);
       let fetchedReports = await response.json();
       if (slug) {
-        fetchedReports = {
-          [slug]: fetchedReports,
-        };
+        setReports(
+          fetchedReports.map((report: any, index: number) => {
+            return {
+              slug,
+              detailsUrl: `${getApiBaseUrl()}validation/systems/${slug}/${index}`,
+              hasErrors: report.summary.errorsCount > 0,
+              version: report.summary.version,
+              timestamp: report.summary.timestamp,
+              ...report,
+            };
+          }),
+        );
+      } else {
+        setReports(
+          Object.keys(fetchedReports).map((key) => {
+            return {
+              slug: key,
+              detailsUrl: `${getApiBaseUrl()}validation/systems/${key}/0`,
+              hasErrors: fetchedReports[key].summary.errorsCount > 0,
+              version: fetchedReports[key].summary.version,
+              timestamp: fetchedReports[key].summary.timestamp,
+              ...fetchedReports[key],
+            };
+          }),
+        );
       }
-
-      setReports(
-        Object.keys(fetchedReports).map((key) => {
-          return {
-            slug: key,
-            detailsUrl: `${getApiBaseUrl()}validation/systems/${key}`,
-            hasErrors: fetchedReports[key].summary.errorsCount > 0,
-            version: fetchedReports[key].summary.version,
-            timestamp: fetchedReports[key].summary.timestamp,
-            ...fetchedReports[key],
-          };
-        }),
-      );
     };
     fetchReports();
   }, [slug]);
