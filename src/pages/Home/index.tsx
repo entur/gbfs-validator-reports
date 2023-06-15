@@ -39,7 +39,7 @@ const Home = () => {
               timestamp: report.summary.timestamp,
               ...report,
             };
-          }),
+          }).reverse(),
         );
       } else {
         setReports(
