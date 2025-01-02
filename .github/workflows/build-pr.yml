@@ -13,8 +13,11 @@ jobs:
         with:
           node-version: 10.24
       - run: npm ci && npm run build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18.12
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MOBILITY_MAP_DEMO_DEV }}'
-          projectId: mobility-map-demo-dev
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GBFS_VALIDATOR_REPORTS_DEV }}'
+          projectId: gbfs-validator-reports-dev
