@@ -18,18 +18,13 @@
     "lint-staged": "10.5.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-router-dom": "5.3.4",
-    "react-scripts": "4.0.3"
+    "react-router-dom": "5.3.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -49,11 +44,13 @@
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
     "@types/react-router-dom": "5.3.3",
+    "@vitejs/plugin-react": "^5.0.0",
     "firebase-tools": "9.23.3",
     "prettier": "2.8.8",
-    "typescript": "4.9.5"
+    "typescript": "4.9.5",
+    "vite": "^7.1.2",
+    "vite-tsconfig-paths": "^5.1.4"
   },
-  "proxy": "http://localhost:8080",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
