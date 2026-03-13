@@ -14,7 +14,7 @@
     "@entur/tokens": "3.17.6",
     "@entur/tooltip": "2.7.11",
     "@entur/typography": "1.9.2",
-    "husky": "6.0.0",
+    "husky": "9.1.7",
     "lint-staged": "10.5.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
